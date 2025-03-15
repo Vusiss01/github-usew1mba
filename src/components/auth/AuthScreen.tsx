@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import Footer from "../layout/Footer";
+import Logo from "../layout/Logo";
 
 const AuthScreen = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const AuthScreen = () => {
       {/* Left side - Form */}
       <div className="w-full md:w-[400px] bg-white p-8 flex flex-col justify-center">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-orange-500">Bizibyte</h1>
+          <Logo />
           <p className="mt-2 text-gray-600">Sign in to your account</p>
         </div>
 

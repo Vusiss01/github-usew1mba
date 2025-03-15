@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import Footer from "../layout/Footer";
 import { Input } from "../ui/input";
+import Logo from "../layout/Logo";
 
 const SplashScreen = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const SplashScreen = () => {
     <div className="min-h-screen flex flex-col bg-orange-50">
       {/* Header */}
       <header className="p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-orange-500">Bizibyte</h1>
+        <Logo />
         <div className="space-x-2">
           <Button
             variant="ghost"

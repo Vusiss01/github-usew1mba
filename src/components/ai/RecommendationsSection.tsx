@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Sparkles, ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import RecommendationCard from "./RecommendationCard";
@@ -68,6 +69,8 @@ const RecommendationsSection = ({
   ],
   className = "",
 }: RecommendationsSectionProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className={className}>
       <div className="flex justify-between items-center mb-4">
@@ -78,6 +81,7 @@ const RecommendationsSection = ({
         <Button
           variant="ghost"
           className="text-orange-500 flex items-center gap-1"
+          onClick={() => navigate("/recommendations")}
         >
           See All <ChevronRight className="h-4 w-4" />
         </Button>

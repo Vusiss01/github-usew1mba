@@ -22,6 +22,8 @@ import StoreCard from "./layout/StoreCard";
 import FoodCategoryCard from "./layout/FoodCategoryCard";
 import SortFilterBar from "./layout/SortFilterBar";
 import FilterSidebar from "./layout/FilterSidebar";
+import { motion } from "framer-motion";
+import Logo from "./layout/Logo";
 
 // AI Components
 import VoiceOrderButton from "./ai/VoiceOrderButton";
@@ -260,14 +262,7 @@ const HomePage = () => {
       <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
         <div className="container flex items-center justify-between h-16 px-4 mx-auto">
           {/* Logo */}
-          <div className="flex items-center">
-            <h1
-              className="text-xl font-bold text-orange-500 cursor-pointer"
-              onClick={() => navigate("/splash")}
-            >
-              Bizibyte
-            </h1>
-          </div>
+          <Logo />
 
           {/* Delivery/Pickup Toggle */}
           <div className="hidden md:flex items-center bg-gray-100 rounded-full p-1">
@@ -313,7 +308,10 @@ const HomePage = () => {
                 </button>
               ))}
               <div className="border-t border-gray-100 mt-1 pt-1">
-                <button className="w-full text-left px-4 py-2 text-sm text-orange-500 hover:bg-gray-50 flex items-center">
+                <button 
+                  className="w-full text-left px-4 py-2 text-sm text-orange-500 hover:bg-gray-50 flex items-center"
+                  onClick={() => navigate("/splash")}
+                >
                   <MapPin className="h-4 w-4 mr-2" />
                   Add new address
                 </button>
@@ -445,7 +443,10 @@ const HomePage = () => {
           <section className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Stores near you</h2>
-              <button className="text-sm text-orange-500 font-medium flex items-center">
+              <button 
+                className="text-sm text-orange-500 font-medium flex items-center"
+                onClick={() => navigate("/all-stores")}
+              >
                 See all <ChevronRight className="h-4 w-4 ml-1" />
               </button>
             </div>
@@ -473,6 +474,7 @@ const HomePage = () => {
               <Button
                 variant="ghost"
                 className="text-orange-500 flex items-center gap-1 text-sm"
+                onClick={() => navigate("/full-map")}
               >
                 View Full Map <ChevronRight className="h-4 w-4" />
               </Button>
@@ -490,7 +492,10 @@ const HomePage = () => {
           <section className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Delicious milkshakes</h2>
-              <button className="text-sm text-orange-500 font-medium flex items-center">
+              <button 
+                className="text-sm text-orange-500 font-medium flex items-center"
+                onClick={() => navigate("/milkshakes")}
+              >
                 See all <ChevronRight className="h-4 w-4 ml-1" />
               </button>
             </div>

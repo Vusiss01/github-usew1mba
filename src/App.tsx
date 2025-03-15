@@ -27,6 +27,26 @@ import HelpSupportScreen from "./components/support/HelpSupportScreen";
 import SettingsScreen from "./components/profile/SettingsScreen";
 import TopRatedScreen from "./components/top-rated/TopRatedScreen";
 import CuisinesScreen from "./components/cuisines/CuisinesScreen";
+import AllStoresPage from "./pages/AllStoresPage";
+import AllRecommendationsPage from "./pages/AllRecommendationsPage";
+import AllTrendingPage from "./pages/AllTrendingPage";
+import AllMilkshakesPage from "./pages/AllMilkshakesPage";
+import FullMapPage from "./pages/FullMapPage";
+import GiftCardsPage from "./pages/help/GiftCardsPage";
+import AddRestaurantPage from "./pages/restaurants/AddRestaurantPage";
+import SignUpDeliverPage from "./pages/help/SignUpDeliverPage";
+import FirstOrderPage from "./pages/help/FirstOrderPage";
+import NearbyRestaurantsPage from "./pages/restaurants/NearbyRestaurantsPage";
+import ViewAllCitiesPage from "./pages/restaurants/ViewAllCitiesPage";
+import PickupNearMePage from "./pages/restaurants/PickupNearMePage";
+import AboutUsPage from "./pages/about/AboutUsPage";
+import CareersPage from "./pages/about/CareersPage";
+import InvestorsPage from "./pages/about/InvestorsPage";
+import BlogPage from "./pages/about/BlogPage";
+import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage";
+import TermsPage from "./pages/legal/TermsPage";
+import PricingPage from "./pages/legal/PricingPage";
+import DoNotSellPage from "./pages/legal/DoNotSellPage";
 import routes from "tempo-routes";
 import { SidebarProvider } from "./components/layout/SidebarContext";
 
@@ -43,6 +63,30 @@ function App() {
             {/* Main Screens */}
             <Route path="/" element={<HomePage />} />
             <Route path="/category/:categoryId" element={<CategoryDetail />} />
+
+            {/* New Routes */}
+            <Route path="/all-stores" element={<AllStoresPage />} />
+            <Route path="/full-map" element={<FullMapPage />} />
+            <Route path="/recommendations" element={<AllRecommendationsPage />} />
+            <Route path="/trending" element={<AllTrendingPage />} />
+            <Route path="/milkshakes" element={<AllMilkshakesPage />} />
+
+            {/* Help Routes */}
+            <Route path="/gift-cards" element={<GiftCardsPage />} />
+            <Route path="/add-restaurant" element={<AddRestaurantPage />} />
+            <Route path="/sign-up-deliver" element={<SignUpDeliverPage />} />
+            <Route path="/first-order" element={<FirstOrderPage />} />
+
+            {/* Restaurant Routes */}
+            <Route path="/nearby" element={<NearbyRestaurantsPage />} />
+            <Route path="/cities" element={<ViewAllCitiesPage />} />
+            <Route path="/pickup" element={<PickupNearMePage />} />
+
+            {/* About Routes */}
+            <Route path="/about" element={<AboutUsPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/investors" element={<InvestorsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
 
             {/* Vendor Screens */}
             <Route path="/vendors" element={<VendorListScreen />} />
@@ -99,8 +143,14 @@ function App() {
             <Route path="/top-rated" element={<TopRatedScreen />} />
             <Route path="/cuisines" element={<CuisinesScreen />} />
 
+            {/* Legal Routes */}
+            <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
+            <Route path="/legal/terms" element={<TermsPage />} />
+            <Route path="/legal/pricing" element={<PricingPage />} />
+            <Route path="/legal/do-not-sell" element={<DoNotSellPage />} />
+
             {/* Fallback */}
-            <Route path="*" element={<Navigate to="/splash" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
         </>
