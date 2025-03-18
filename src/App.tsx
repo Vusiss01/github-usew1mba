@@ -49,12 +49,19 @@ import PricingPage from "./pages/legal/PricingPage";
 import DoNotSellPage from "./pages/legal/DoNotSellPage";
 import routes from "tempo-routes";
 import { SidebarProvider } from "./components/layout/SidebarContext";
+import CategoryPage from './pages/category/[id]';
+import CategoriesPage from './pages/categories';
+import VendorPage from './pages/vendor/[id]';
+import TrendingItemPage from './pages/trending/[id]';
+import RecommendedItemPage from './pages/recommended/[id]';
+import Sidebar from "./components/layout/Sidebar";
 
 function App() {
   return (
     <SidebarProvider>
       <Suspense fallback={<p>Loading...</p>}>
         <>
+          <Sidebar />
           <Routes>
             {/* Authentication */}
             <Route path="/splash" element={<SplashScreen />} />
@@ -62,7 +69,8 @@ function App() {
 
             {/* Main Screens */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/category/:categoryId" element={<CategoryDetail />} />
+            <Route path="/category/:id" element={<CategoryPage />} />
+            <Route path="/categories" element={<CategoriesPage />} />
 
             {/* New Routes */}
             <Route path="/all-stores" element={<AllStoresPage />} />
@@ -148,6 +156,15 @@ function App() {
             <Route path="/legal/terms" element={<TermsPage />} />
             <Route path="/legal/pricing" element={<PricingPage />} />
             <Route path="/legal/do-not-sell" element={<DoNotSellPage />} />
+
+            {/* Vendor Page */}
+            <Route path="/vendor/:id" element={<VendorPage />} />
+
+            {/* Trending Item Page */}
+            <Route path="/trending/:id" element={<TrendingItemPage />} />
+
+            {/* Recommended Item Page */}
+            <Route path="/recommended/:id" element={<RecommendedItemPage />} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

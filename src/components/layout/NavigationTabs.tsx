@@ -18,7 +18,7 @@ const NavigationTabs = () => {
   ];
 
   return (
-    <div className="sticky top-16 z-40 w-full bg-white border-b border-gray-200">
+    <div className="sticky top-16 z-40 w-full bg-white border-b border-gray-200 block md:hidden">
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between overflow-x-auto py-1 gap-2">
           {tabs.map(({ path, icon: Icon, label }) => {

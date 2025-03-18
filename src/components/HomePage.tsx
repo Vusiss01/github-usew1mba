@@ -149,7 +149,7 @@ const HomePage = () => {
 
   // Navigate to restaurant detail page
   const handleStoreClick = (storeId) => {
-    navigate(`/category/${storeId}`);
+    navigate(`/vendor/${storeId}`);
   };
 
   // Handle filter changes
@@ -458,7 +458,6 @@ const HomePage = () => {
                   name={store.name}
                   image={store.image}
                   deliveryTime={store.deliveryTime}
-                  onClick={() => handleStoreClick(store.id)}
                 />
               ))}
             </div>
@@ -491,22 +490,42 @@ const HomePage = () => {
           {/* Food Categories */}
           <section className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Delicious milkshakes</h2>
+              <h2 className="text-xl font-bold">Food Categories</h2>
               <button 
                 className="text-sm text-orange-500 font-medium flex items-center"
-                onClick={() => navigate("/milkshakes")}
+                onClick={() => navigate("/categories")}
               >
                 See all <ChevronRight className="h-4 w-4 ml-1" />
               </button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {foodCategories.map((category) => (
+              {[
+                {
+                  id: "burgers",
+                  name: "Burgers",
+                  image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                },
+                {
+                  id: "pizza",
+                  name: "Pizza",
+                  image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                },
+                {
+                  id: "sushi",
+                  name: "Sushi",
+                  image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                },
+                {
+                  id: "mexican",
+                  name: "Mexican",
+                  image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                },
+              ].map((category) => (
                 <FoodCategoryCard
                   key={category.id}
                   id={category.id}
                   name={category.name}
                   image={category.image}
-                  onClick={() => handleStoreClick(category.id)}
                 />
               ))}
             </div>
