@@ -8,9 +8,13 @@ interface LogoProps {
   variant?: 'default' | 'white';
 }
 
-const Logo = ({ className = "", variant = 'default' }: LogoProps) => {
+const Logo: React.FC<LogoProps> = ({ className = "", variant = 'default' }) => {
   const navigate = useNavigate();
   const { toggleSidebar } = useSidebar();
+
+  const handleClick = () => {
+    navigate('/');
+  };
 
   const textColor = variant === 'white' ? 'text-white' : 'text-gray-900 dark:text-white';
   const dotColor = variant === 'white' ? 'text-white/30' : 'text-orange-500/30';
@@ -29,7 +33,7 @@ const Logo = ({ className = "", variant = 'default' }: LogoProps) => {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className="relative group cursor-pointer"
-        onClick={() => navigate("/")}
+        onClick={handleClick}
         onMouseEnter={toggleSidebar}
       >
         <h1 className="flex items-center space-x-1">

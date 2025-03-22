@@ -1,5 +1,13 @@
 import { Suspense } from "react";
-import { useRoutes, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import './styles/components.css';
+
+// Layout Components
+import { SidebarProvider } from "./components/layout/SidebarContext";
+import Sidebar from "./components/layout/Sidebar";
+
+// Page Components
 import HomePage from "./components/HomePage";
 import CategoryDetail from "./components/home";
 import SplashScreen from "./components/auth/SplashScreen";
@@ -23,8 +31,6 @@ import DietaryPreferencesScreen from "./components/profile/DietaryPreferencesScr
 import PromotionsScreen from "./components/promotions/PromotionsScreen";
 import NotificationsScreen from "./components/notifications/NotificationsScreen";
 import FavoritesScreen from "./components/favorites/FavoritesScreen";
-import HelpSupportScreen from "./components/support/HelpSupportScreen";
-import SettingsScreen from "./components/profile/SettingsScreen";
 import TopRatedScreen from "./components/top-rated/TopRatedScreen";
 import CuisinesScreen from "./components/cuisines/CuisinesScreen";
 import AllStoresPage from "./pages/AllStoresPage";
@@ -48,129 +54,107 @@ import TermsPage from "./pages/legal/TermsPage";
 import PricingPage from "./pages/legal/PricingPage";
 import DoNotSellPage from "./pages/legal/DoNotSellPage";
 import routes from "tempo-routes";
-import { SidebarProvider } from "./components/layout/SidebarContext";
+import { useRoutes } from "react-router-dom";
 import CategoryPage from './pages/category/[id]';
 import CategoriesPage from './pages/categories';
 import VendorPage from './pages/vendor/[id]';
 import TrendingItemPage from './pages/trending/[id]';
 import RecommendedItemPage from './pages/recommended/[id]';
-import Sidebar from "./components/layout/Sidebar";
 
 function App() {
   return (
     <SidebarProvider>
-      <Suspense fallback={<p>Loading...</p>}>
-        <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="flex min-h-screen">
           <Sidebar />
-          <Routes>
-            {/* Authentication */}
-            <Route path="/splash" element={<SplashScreen />} />
-            <Route path="/auth" element={<AuthScreen />} />
+          <div className="flex-1">
+            <Routes>
+              {/* Main Routes */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/auth" element={<AuthScreen />} />
+              <Route path="/splash" element={<SplashScreen />} />
+              <Route path="/category/:id" element={<CategoryDetail />} />
+              
+              {/* Vendor Routes */}
+              <Route path="/vendors" element={<VendorListScreen />} />
+              <Route path="/vendor/:vendorId" element={<VendorDetailScreen />} />
+              <Route path="/vendor/:vendorId/menu" element={<MenuScreen />} />
+              <Route path="/vendor/:vendorId/menu/:itemId" element={<ItemDetailScreen />} />
 
-            {/* Main Screens */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/category/:id" element={<CategoryPage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
+              {/* Cart & Checkout */}
+              <Route path="/cart" element={<CartScreen />} />
+              <Route path="/checkout" element={<CheckoutScreen />} />
 
-            {/* New Routes */}
-            <Route path="/all-stores" element={<AllStoresPage />} />
-            <Route path="/full-map" element={<FullMapPage />} />
-            <Route path="/recommendations" element={<AllRecommendationsPage />} />
-            <Route path="/trending" element={<AllTrendingPage />} />
-            <Route path="/milkshakes" element={<AllMilkshakesPage />} />
+              {/* Orders */}
+              <Route path="/order-confirmation" element={<OrderConfirmationScreen />} />
+              <Route path="/order-tracking/:orderId" element={<OrderTrackingScreen />} />
+              <Route path="/orders" element={<OrderHistoryScreen />} />
 
-            {/* Help Routes */}
-            <Route path="/gift-cards" element={<GiftCardsPage />} />
-            <Route path="/add-restaurant" element={<AddRestaurantPage />} />
-            <Route path="/sign-up-deliver" element={<SignUpDeliverPage />} />
-            <Route path="/first-order" element={<FirstOrderPage />} />
+              {/* Profile */}
+              <Route path="/profile" element={<UserProfileScreen />} />
+              <Route path="/profile/payment-methods" element={<PaymentMethodsScreen />} />
+              <Route path="/profile/dietary-preferences" element={<DietaryPreferencesScreen />} />
+              <Route path="/favorites" element={<FavoritesScreen />} />
 
-            {/* Restaurant Routes */}
-            <Route path="/nearby" element={<NearbyRestaurantsPage />} />
-            <Route path="/cities" element={<ViewAllCitiesPage />} />
-            <Route path="/pickup" element={<PickupNearMePage />} />
+              {/* Reviews */}
+              <Route path="/reviews/:vendorId" element={<ReviewsScreen />} />
 
-            {/* About Routes */}
-            <Route path="/about" element={<AboutUsPage />} />
-            <Route path="/careers" element={<CareersPage />} />
-            <Route path="/investors" element={<InvestorsPage />} />
-            <Route path="/blog" element={<BlogPage />} />
+              {/* Search */}
+              <Route path="/search" element={<SearchScreen />} />
 
-            {/* Vendor Screens */}
-            <Route path="/vendors" element={<VendorListScreen />} />
-            <Route path="/vendor/:vendorId" element={<VendorDetailScreen />} />
-            <Route path="/vendor/:vendorId/menu" element={<MenuScreen />} />
-            <Route
-              path="/vendor/:vendorId/menu/:itemId"
-              element={<ItemDetailScreen />}
-            />
+              {/* Additional Features */}
+              <Route path="/catering-request" element={<CateringRequestScreen />} />
+              <Route path="/chat/:vendorId" element={<ChatScreen />} />
+              <Route path="/promotions" element={<PromotionsScreen />} />
+              <Route path="/notifications" element={<NotificationsScreen />} />
+              <Route path="/top-rated" element={<TopRatedScreen />} />
+              <Route path="/cuisines" element={<CuisinesScreen />} />
 
-            {/* Cart & Checkout */}
-            <Route path="/cart" element={<CartScreen />} />
-            <Route path="/checkout" element={<CheckoutScreen />} />
+              {/* New Routes */}
+              <Route path="/all-stores" element={<AllStoresPage />} />
+              <Route path="/full-map" element={<FullMapPage />} />
+              <Route path="/recommendations" element={<AllRecommendationsPage />} />
+              <Route path="/trending" element={<AllTrendingPage />} />
+              <Route path="/milkshakes" element={<AllMilkshakesPage />} />
 
-            {/* Orders */}
-            <Route
-              path="/order-confirmation"
-              element={<OrderConfirmationScreen />}
-            />
-            <Route
-              path="/order-tracking/:orderId"
-              element={<OrderTrackingScreen />}
-            />
-            <Route path="/orders" element={<OrderHistoryScreen />} />
+              {/* Help Routes */}
+              <Route path="/gift-cards" element={<GiftCardsPage />} />
+              <Route path="/add-restaurant" element={<AddRestaurantPage />} />
+              <Route path="/sign-up-deliver" element={<SignUpDeliverPage />} />
+              <Route path="/first-order" element={<FirstOrderPage />} />
 
-            {/* Profile */}
-            <Route path="/profile" element={<UserProfileScreen />} />
-            <Route
-              path="/profile/payment-methods"
-              element={<PaymentMethodsScreen />}
-            />
-            <Route
-              path="/profile/dietary-preferences"
-              element={<DietaryPreferencesScreen />}
-            />
-            <Route path="/profile/settings" element={<SettingsScreen />} />
-            <Route path="/favorites" element={<FavoritesScreen />} />
+              {/* Restaurant Routes */}
+              <Route path="/nearby" element={<NearbyRestaurantsPage />} />
+              <Route path="/cities" element={<ViewAllCitiesPage />} />
+              <Route path="/pickup" element={<PickupNearMePage />} />
 
-            {/* Reviews */}
-            <Route path="/reviews/:vendorId" element={<ReviewsScreen />} />
+              {/* About Routes */}
+              <Route path="/about" element={<AboutUsPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/investors" element={<InvestorsPage />} />
+              <Route path="/blog" element={<BlogPage />} />
 
-            {/* Search */}
-            <Route path="/search" element={<SearchScreen />} />
+              {/* Legal Routes */}
+              <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/legal/terms" element={<TermsPage />} />
+              <Route path="/legal/pricing" element={<PricingPage />} />
+              <Route path="/legal/do-not-sell" element={<DoNotSellPage />} />
 
-            {/* Additional Features */}
-            <Route
-              path="/catering-request"
-              element={<CateringRequestScreen />}
-            />
-            <Route path="/chat/:vendorId" element={<ChatScreen />} />
-            <Route path="/promotions" element={<PromotionsScreen />} />
-            <Route path="/notifications" element={<NotificationsScreen />} />
-            <Route path="/help-support" element={<HelpSupportScreen />} />
-            <Route path="/top-rated" element={<TopRatedScreen />} />
-            <Route path="/cuisines" element={<CuisinesScreen />} />
+              {/* Vendor Page */}
+              <Route path="/vendor/:id" element={<VendorPage />} />
 
-            {/* Legal Routes */}
-            <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
-            <Route path="/legal/terms" element={<TermsPage />} />
-            <Route path="/legal/pricing" element={<PricingPage />} />
-            <Route path="/legal/do-not-sell" element={<DoNotSellPage />} />
+              {/* Trending Item Page */}
+              <Route path="/trending/:id" element={<TrendingItemPage />} />
 
-            {/* Vendor Page */}
-            <Route path="/vendor/:id" element={<VendorPage />} />
+              {/* Recommended Item Page */}
+              <Route path="/recommended/:id" element={<RecommendedItemPage />} />
 
-            {/* Trending Item Page */}
-            <Route path="/trending/:id" element={<TrendingItemPage />} />
-
-            {/* Recommended Item Page */}
-            <Route path="/recommended/:id" element={<RecommendedItemPage />} />
-
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-          {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
-        </>
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+        </div>
+        {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </Suspense>
     </SidebarProvider>
   );
