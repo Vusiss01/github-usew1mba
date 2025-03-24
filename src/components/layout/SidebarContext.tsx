@@ -6,14 +6,9 @@ interface SidebarContextType {
   toggleSidebar: () => void;
 }
 
-const SidebarContext = createContext<SidebarContextType>({
-  isOpen: false,
-  toggleSidebar: () => {},
-});
+const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
-export const useSidebar = () => useContext(SidebarContext);
-
-export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export function SidebarProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -25,4 +20,12 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
       {children}
     </SidebarContext.Provider>
   );
-};
+}
+
+export function useSidebar() {
+  const context = useContext(SidebarContext);
+  if (context === undefined) {
+    throw new Error('useSidebar must be used within a SidebarProvider');
+  }
+  return context;
+}

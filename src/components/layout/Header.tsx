@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   MapPin,
   ChevronDown,
@@ -7,12 +6,12 @@ import {
   ShoppingBag,
   SlidersHorizontal,
   Menu,
+  Mic,
 } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
-import Logo from './Logo';
-import VoiceOrderButton from '../ai/VoiceOrderButton';
 import { useSidebar } from './SidebarContext';
+import Logo from './Logo';
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -24,7 +23,7 @@ interface HeaderProps {
   onCartClick?: () => void;
 }
 
-const Header = ({
+export default function Header({
   showSearch = true,
   showLocation = true,
   showCart = true,
@@ -32,26 +31,31 @@ const Header = ({
   cartCount = 0,
   onFilterClick,
   onCartClick,
-}: HeaderProps) => {
-  const navigate = useNavigate();
-  const { toggleSidebar } = useSidebar();
+}: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [location, setLocation] = useState('12 Roncroft Dr');
+  const [isRecording, setIsRecording] = useState(false);
+  const { toggleSidebar } = useSidebar();
+
+  const handleVoiceOrder = () => {
+    setIsRecording(!isRecording);
+    // Voice recognition logic would go here
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
       <div className="container flex items-center h-16 px-4 mx-auto">
         {/* Left Section: Menu and Logo */}
         <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleSidebar}
-            className="flex-shrink-0"
-            >
-              <Menu className="h-6 w-6" />
-            </Button>
-          <Logo />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleSidebar}
+            className="flex-shrink-0 md:hidden"
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
+          <Logo variant="default" />
         </div>
 
         {/* Center Section: Delivery/Pickup Toggle and Location */}
@@ -94,18 +98,20 @@ const Header = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <div className="absolute right-1 top-1/2 transform -translate-y-1/2">
-                <VoiceOrderButton
-                  showTooltip={false}
-                  onTranscript={(text) => setSearchQuery(text)}
-                />
-              </div>
+              <button
+                onClick={handleVoiceOrder}
+                className={`absolute right-3 top-1/2 transform -translate-y-1/2 p-1 rounded-full ${
+                  isRecording ? 'bg-red-500 animate-pulse' : 'hover:bg-gray-100'
+                }`}
+              >
+                <Mic className={`h-4 w-4 ${isRecording ? 'text-white' : 'text-gray-400'}`} />
+              </button>
             </div>
           </div>
         )}
 
         {/* Right Section: Cart, Filter, and Auth */}
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
           {showCart && (
             <button
               className="relative"
@@ -133,21 +139,17 @@ const Header = ({
           <div className="flex items-center space-x-4">
             <button
               className="text-sm font-medium hover:text-orange-500"
-              onClick={() => navigate('/auth')}
             >
               Log in
             </button>
             <button
               className="text-sm font-medium hover:text-orange-500"
-              onClick={() => navigate('/auth')}
             >
               Sign up
             </button>
           </div>
         </div>
-          </div>
-      </header>
+      </div>
+    </header>
   );
-};
-
-export default Header;
+}

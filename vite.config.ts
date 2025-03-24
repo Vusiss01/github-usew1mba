@@ -1,37 +1,38 @@
-import path from "path";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import { tempo } from "tempo-devtools/dist/vite";
-
-const conditionalPlugins: [string, Record<string, any>][] = [];
-
-// @ts-ignore
-if (process.env.TEMPO === "true") {
-  conditionalPlugins.push(["tempo-devtools/swc", {}]);
-}
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === "development" ? "/" : process.env.VITE_BASE_PATH || "/",
-  optimizeDeps: {
-    entries: ["src/main.tsx", "src/tempobook/**/*"],
+  plugins: [react()],
+  server: {
+    host: 'localhost',
+    port: 5173,
+    strictPort: true,
+    open: true
   },
-  plugins: [
-    react({
-      plugins: conditionalPlugins,
-    }),
-    tempo(),
-  ],
   resolve: {
-    preserveSymlinks: true,
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
-  server: {
-    port: 5174,
-    strictPort: true,
-    // @ts-ignore
-    allowedHosts: true,
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu']
+        }
+      }
+    }
+  },
+  preview: {
+    port: 8080,
+    strictPort: false,
+    host: true,
+    open: true
   }
 });

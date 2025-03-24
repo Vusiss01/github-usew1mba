@@ -1,7 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useSidebar } from './SidebarContext';
 
 interface LogoProps {
   className?: string;
@@ -9,13 +7,6 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className = "", variant = 'default' }) => {
-  const navigate = useNavigate();
-  const { toggleSidebar } = useSidebar();
-
-  const handleClick = () => {
-    navigate('/');
-  };
-
   const textColor = variant === 'white' ? 'text-white' : 'text-gray-900 dark:text-white';
   const dotColor = variant === 'white' ? 'text-white/30' : 'text-orange-500/30';
   const byteGradient = variant === 'white' ? 'from-white to-white/90' : 'from-orange-500 to-orange-600';
@@ -33,8 +24,6 @@ const Logo: React.FC<LogoProps> = ({ className = "", variant = 'default' }) => {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className="relative group cursor-pointer"
-        onClick={handleClick}
-        onMouseEnter={toggleSidebar}
       >
         <h1 className="flex items-center space-x-1">
           <span className={`text-2xl font-light tracking-tight ${textColor} relative`}>
