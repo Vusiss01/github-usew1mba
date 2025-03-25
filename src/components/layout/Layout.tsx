@@ -3,14 +3,15 @@ import Footer from "./Footer"
 import { useSidebar } from "./SidebarContext"
 import Logo from "./Logo"
 import { Home, Store, Clock, User, Settings } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import { useEffect } from "react"
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
 export function Layout({ children }: LayoutProps) {
-  const { isOpen } = useSidebar();
+  const { isOpen, toggleSidebar } = useSidebar();
 
   const menuItems = [
     { icon: Home, label: 'Home', href: '#' },
@@ -41,55 +42,108 @@ export function Layout({ children }: LayoutProps) {
     }
   };
 
+  const sidebarVariants = {
+    open: {
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }
+    },
+    closed: {
+      x: "-100%",
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 30
+      }
+    }
+  };
+
+  // Handle clicking outside the sidebar
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const sidebar = document.getElementById('sidebar');
+      const logo = document.getElementById('logo');
+
+      // Don't close if clicking inside sidebar or on logo
+      if (sidebar && !sidebar.contains(target) && logo && !logo.contains(target)) {
+        toggleSidebar(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isOpen, toggleSidebar]);
+
   return (
     <div className="relative min-h-screen flex">
-      {/* Sidebar */}
+      {/* Hover trigger area */}
       <div 
-        className={`fixed inset-y-0 left-0 transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } w-64 bg-white shadow-lg transition-transform duration-200 ease-in-out z-30 md:translate-x-0 md:static md:h-screen`}
-      >
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-center h-16 border-b bg-gradient-to-r from-orange-500 to-orange-600">
-            <Logo variant="white" />
-          </div>
-          <nav className="flex-1 px-4 py-4 space-y-1">
-            {menuItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  className="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100 group relative"
-                  variants={itemVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                >
-                  <motion.div
-                    variants={iconVariants}
+        className="fixed left-0 top-0 bottom-0 w-2 z-50 cursor-pointer"
+        onMouseEnter={() => toggleSidebar(true)}
+      />
+
+      {/* Sidebar */}
+      <AnimatePresence>
+        <motion.div 
+          id="sidebar"
+          className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-30"
+          initial="closed"
+          animate={isOpen ? "open" : "closed"}
+          variants={sidebarVariants}
+        >
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-center h-16 border-b bg-gradient-to-r from-orange-500 to-orange-600">
+              <div id="logo">
+                <Logo variant="white" />
+              </div>
+            </div>
+            <nav className="flex-1 px-4 py-4 space-y-1">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <motion.a
+                    key={item.label}
+                    href={item.href}
+                    className="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100 group relative"
+                    variants={itemVariants}
                     whileHover="hover"
-                    className="relative"
+                    whileTap="tap"
                   >
-                    <Icon className="h-5 w-5 mr-3" />
-                  </motion.div>
-                  <span className="relative">
-                    {item.label}
-                  </span>
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 to-orange-600"
-                    initial={{ scaleX: 0, originX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  />
-                </motion.a>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
+                    <motion.div
+                      variants={iconVariants}
+                      whileHover="hover"
+                      className="relative"
+                    >
+                      <Icon className="h-5 w-5 mr-3" />
+                    </motion.div>
+                    <span className="relative">
+                      {item.label}
+                    </span>
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 to-orange-600"
+                      initial={{ scaleX: 0, originX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    />
+                  </motion.a>
+                );
+              })}
+            </nav>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${isOpen ? 'md:ml-64' : ''}`}>
         <Header />
         <main className="flex-1 container py-6">
           {children}
@@ -101,7 +155,7 @@ export function Layout({ children }: LayoutProps) {
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
-          onClick={() => useSidebar().toggleSidebar()}
+          onClick={() => toggleSidebar(false)}
         />
       )}
     </div>
