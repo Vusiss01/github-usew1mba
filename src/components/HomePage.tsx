@@ -32,6 +32,14 @@ import RecommendationsSection from "./ai/RecommendationsSection";
 import TrendingSection from "./ai/TrendingSection";
 import QuickLinks from "./ai/QuickLinks";
 
+interface Restaurant {
+  id: string;
+  name: string;
+  image: string;
+  deliveryTime: string;
+  rating: number;
+}
+
 const HomePage = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,11 +51,11 @@ const HomePage = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const { toggleSidebar, isSidebarOpen } = useSidebar();
+  const { isOpen, toggleSidebar } = useSidebar();
 
   // Open sidebar by default on home page
   useEffect(() => {
-    if (!isSidebarOpen) {
+    if (!isOpen) {
       toggleSidebar();
     }
   }, []);
@@ -257,7 +265,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className={`min-h-screen bg-white flex flex-col ${isOpen ? 'md:ml-64' : ''}`}>
       {/* Header */}
       <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
         <div className="container flex items-center justify-between h-16 px-4 mx-auto">

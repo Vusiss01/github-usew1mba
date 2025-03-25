@@ -32,13 +32,13 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t">
+    <footer className="bg-black text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Logo and Description */}
           <div className="lg:col-span-2">
-            <Logo variant="default" />
-            <p className="mt-4 text-gray-600 max-w-md">
+            <Logo variant="white" />
+            <p className="mt-4 text-gray-400 max-w-md">
               Bizibyte connects you with the best local restaurants. Order your favorite meals for delivery or pickup, and enjoy the convenience of food at your fingertips.
             </p>
             <div className="flex space-x-4 mt-6">
@@ -58,11 +58,11 @@ const Footer = () => {
           {/* Footer Sections */}
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="font-semibold text-gray-900 mb-4">{section.title}</h3>
+              <h3 className="font-semibold text-white mb-4">{section.title}</h3>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-gray-600 hover:text-orange-500 transition-colors">
+                    <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
                       {link}
                     </a>
                   </li>
@@ -73,9 +73,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t">
+        <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-600">
+            <p className="text-gray-400">
               © {currentYear} Bizibyte. All rights reserved.
             </p>
             <div className="flex space-x-4">

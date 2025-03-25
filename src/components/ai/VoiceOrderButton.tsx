@@ -14,6 +14,13 @@ interface VoiceOrderButtonProps {
   onTranscript?: (text: string) => void;
 }
 
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
+
 const VoiceOrderButton = ({
   className = "",
   showTooltip = false,
@@ -25,7 +32,6 @@ const VoiceOrderButton = ({
 
   // Initialize speech recognition on component mount
   useEffect(() => {
-    // @ts-ignore - TypeScript doesn't know about these browser-specific APIs
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -97,17 +103,15 @@ const VoiceOrderButton = ({
   }, [isRecording]);
 
   const toggleRecording = () => {
-    // Check browser support
-    // @ts-ignore
-    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-      alert("Speech recognition is not supported in your browser.");
-      return;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (SpeechRecognition) {
+      setIsRecording(!isRecording);
+      console.log("Recording state toggled to:", !isRecording);
+    } else {
+      console.log('Speech recognition not supported');
     }
-
-    // Hide tooltip and toggle recording state
-    setShowTooltipState(false);
-    setIsRecording(!isRecording);
-    console.log("Recording state toggled to:", !isRecording);
   };
 
   const buttonContent = (

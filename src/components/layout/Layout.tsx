@@ -60,7 +60,7 @@ export function Layout({ children }: LayoutProps) {
                 <motion.a
                   key={item.label}
                   href={item.href}
-                  className="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100 group"
+                  className="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100 group relative"
                   variants={itemVariants}
                   whileHover="hover"
                   whileTap="tap"
@@ -71,28 +71,16 @@ export function Layout({ children }: LayoutProps) {
                     className="relative"
                   >
                     <Icon className="h-5 w-5 mr-3" />
-                    <motion.div
-                      className="absolute -top-1 -right-1 h-2 w-2 bg-orange-500 rounded-full"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.5, 1, 0.5]
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    />
                   </motion.div>
                   <span className="relative">
                     {item.label}
-                    <motion.div
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-orange-500 origin-left"
-                      initial={{ scaleX: 0 }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
                   </span>
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 to-orange-600"
+                    initial={{ scaleX: 0, originX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
                 </motion.a>
               );
             })}
