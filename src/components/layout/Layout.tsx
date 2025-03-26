@@ -2,7 +2,7 @@ import Header from "./Header"
 import Footer from "./Footer"
 import { useSidebar } from "./SidebarContext"
 import Logo from "./Logo"
-import { Home, Store, Clock, User, Settings } from "lucide-react"
+import { Home, Store, Clock, User, Settings, Menu } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect } from "react"
 
@@ -87,7 +87,7 @@ export function Layout({ children }: LayoutProps) {
     <div className="relative min-h-screen flex">
       {/* Hover trigger area */}
       <div 
-        className="fixed left-0 top-0 bottom-0 w-2 z-50 cursor-pointer"
+        className="fixed left-0 top-0 bottom-0 w-2 z-50 cursor-pointer hidden md:block"
         onMouseEnter={() => toggleSidebar(true)}
       />
 
@@ -95,7 +95,7 @@ export function Layout({ children }: LayoutProps) {
       <AnimatePresence>
         <motion.div 
           id="sidebar"
-          className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-30"
+          className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-[60] md:w-72"
           initial="closed"
           animate={isOpen ? "open" : "closed"}
           variants={sidebarVariants}
@@ -145,7 +145,7 @@ export function Layout({ children }: LayoutProps) {
       {/* Main Content */}
       <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${isOpen ? 'md:ml-64' : ''}`}>
         <Header />
-        <main className="flex-1 container py-6">
+        <main className="flex-1 container py-4 md:py-6 px-4 md:px-6">
           {children}
         </main>
         <Footer />
