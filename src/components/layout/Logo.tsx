@@ -24,15 +24,15 @@ const Logo: React.FC<LogoProps> = ({ className = "", variant = 'default' }) => {
 
   return (
     <motion.div 
-      className={`flex items-center ${className} relative cursor-pointer select-none`}
+      className={`flex items-center ${className} relative cursor-pointer select-none w-full`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative">
-        <h1 className="flex items-center space-x-1">
+      <div className="relative w-full">
+        <h1 className="flex items-center space-x-1 w-full">
           <span className={`text-2xl font-light tracking-tight ${textColor} relative`}>
             <span className="relative">
               b<span className={dotColor}>.</span>

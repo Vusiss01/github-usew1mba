@@ -44,7 +44,7 @@ export default function Header({
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
-      <div className="container flex flex-col md:flex-row items-center h-auto md:h-16 px-4 mx-auto py-2 md:py-0">
+      <div className="container flex flex-col md:flex-row items-center h-auto md:h-16 px-8 mx-auto py-4 md:py-0">
         {/* Left Section: Menu and Logo */}
         <div className="flex items-center justify-between w-full md:w-auto mb-2 md:mb-0">
           <div className="flex items-center space-x-3">
@@ -62,7 +62,7 @@ export default function Header({
             <Logo variant="default" />
           </div>
           {/* Mobile-only cart and auth buttons */}
-          <div className="flex items-center space-x-4 md:hidden">
+          <div className="flex items-center space-x-4 md:hidden pr-6">
             <button
               className="text-sm font-medium hover:text-orange-500"
             >
@@ -94,7 +94,7 @@ export default function Header({
         </div>
 
         {/* Center Section: Delivery/Pickup Toggle and Location */}
-        <div className="flex items-center space-x-4 w-full md:w-auto mb-2 md:mb-0">
+        <div className="flex items-center space-x-4 w-full md:w-auto mb-2 md:mb-0 md:ml-8">
           {/* Delivery/Pickup Toggle */}
           <div className="flex items-center bg-gray-100 rounded-full p-1 flex-1 md:flex-none">
             <button
@@ -123,7 +123,7 @@ export default function Header({
 
         {/* Search Bar */}
         {showSearch && (
-          <div className="flex-1 w-full md:max-w-md mb-2 md:mb-0">
+          <div className="flex-1 w-full md:max-w-md mb-2 md:mb-0 mx-2 md:mx-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input

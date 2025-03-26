@@ -4,7 +4,7 @@ import { useSidebar } from "./SidebarContext"
 import Logo from "./Logo"
 import { Home, Store, Clock, User, Settings, Menu } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -12,13 +12,19 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const { isOpen, toggleSidebar } = useSidebar();
+  const [currentPath, setCurrentPath] = useState('/');
+
+  useEffect(() => {
+    // Get current path from window location
+    setCurrentPath(window.location.pathname);
+  }, []);
 
   const menuItems = [
-    { icon: Home, label: 'Home', href: '#' },
-    { icon: Store, label: 'Restaurants', href: '#' },
-    { icon: Clock, label: 'Orders', href: '#' },
-    { icon: User, label: 'Account', href: '#' },
-    { icon: Settings, label: 'Settings', href: '#' },
+    { icon: Home, label: 'Home', href: '/' },
+    { icon: Store, label: 'Restaurants', href: '/restaurants' },
+    { icon: Clock, label: 'Orders', href: '/orders' },
+    { icon: User, label: 'Account', href: '/account' },
+    { icon: Settings, label: 'Settings', href: '/settings' },
   ];
 
   const itemVariants = {
@@ -109,11 +115,12 @@ export function Layout({ children }: LayoutProps) {
             <nav className="flex-1 px-4 py-4 space-y-1">
               {menuItems.map((item) => {
                 const Icon = item.icon;
+                const isActive = currentPath === item.href;
                 return (
                   <motion.a
                     key={item.label}
                     href={item.href}
-                    className="flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100 group relative"
+                    className={`flex items-center px-4 py-3 text-gray-600 rounded-lg hover:bg-gray-100 group relative ${isActive ? 'text-orange-500' : ''}`}
                     variants={itemVariants}
                     whileHover="hover"
                     whileTap="tap"
@@ -123,17 +130,19 @@ export function Layout({ children }: LayoutProps) {
                       whileHover="hover"
                       className="relative"
                     >
-                      <Icon className="h-5 w-5 mr-3" />
+                      <Icon className={`h-5 w-5 mr-3 ${isActive ? 'text-orange-500' : ''}`} />
                     </motion.div>
                     <span className="relative">
                       {item.label}
                     </span>
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 to-orange-600"
-                      initial={{ scaleX: 0, originX: 0 }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                    />
+                    {isActive && (
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 to-orange-600"
+                        initial={{ scaleX: 0, originX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      />
+                    )}
                   </motion.a>
                 );
               })}
