@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useSidebar } from "./SidebarContext";
+import { useNavigate } from "react-router-dom";
 
 interface LogoProps {
   className?: string;
@@ -10,6 +11,7 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ className = "", variant = 'default' }) => {
   const { toggleSidebar } = useSidebar();
   const [isHovered, setIsHovered] = React.useState(false);
+  const navigate = useNavigate();
 
   const textColor = variant === 'white' ? 'text-white' : 'text-gray-900 dark:text-white';
   const dotColor = variant === 'white' ? 'text-white/30' : 'text-orange-500/30';
@@ -24,15 +26,16 @@ const Logo: React.FC<LogoProps> = ({ className = "", variant = 'default' }) => {
 
   return (
     <motion.div 
-      className={`flex items-center ${className} relative cursor-pointer select-none w-full`}
+      className={`flex items-center ${className} relative cursor-pointer select-none`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={() => navigate('/splash')}
     >
-      <div className="relative w-full">
-        <h1 className="flex items-center space-x-1 w-full">
+      <div className="relative">
+        <h1 className="flex items-center space-x-1">
           <span className={`text-2xl font-light tracking-tight ${textColor} relative`}>
             <span className="relative">
               b<span className={dotColor}>.</span>

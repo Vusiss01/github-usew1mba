@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { Loader2, MapPin } from "lucide-react";
 import { Button } from "../ui/button";
 import Footer from "../layout/Footer";
 import { Input } from "../ui/input";
@@ -11,16 +11,6 @@ const SplashScreen = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
-
-  useEffect(() => {
-    // Auto-navigate after a delay if needed
-    const timer = setTimeout(() => {
-      // Uncomment to auto-navigate
-      // navigate("/auth");
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [navigate]);
 
   const handleGetStarted = () => {
     setLoading(true);
@@ -76,56 +66,37 @@ const SplashScreen = () => {
                   onChange={(e) => setAddress(e.target.value)}
                 />
                 <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                  <svg
-                    className="h-5 w-5 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+                  <MapPin className="h-5 w-5 text-gray-400" />
                 </div>
               </div>
-              <div className="w-full sm:w-auto">
-                <Button
-                  className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white py-6 px-8 rounded-lg"
-                  onClick={handleGetStarted}
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                  ) : (
-                    "Search Here"
-                  )}
-                </Button>
-              </div>
+              <Button
+                className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white py-6 px-8 rounded-lg"
+                onClick={handleGetStarted}
+                disabled={loading}
+              >
+                {loading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  "Search Here"
+                )}
+              </Button>
             </div>
 
             <div className="text-gray-600">
               Or{" "}
               <button
-                className="text-orange-500 font-medium"
+                className="text-orange-500 font-medium hover:text-orange-600"
                 onClick={() => navigate("/auth")}
               >
                 Sign In
-              </button>
+              </button>{" "}
+              to continue
             </div>
           </motion.div>
         </div>
 
         {/* Image Section */}
-        <div className="flex-1 relative overflow-hidden bg-orange-400">
+        <div className="hidden md:block relative flex-1 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-orange-400/90 to-orange-500/90"></div>
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center mix-blend-overlay"></div>
 
@@ -144,6 +115,7 @@ const SplashScreen = () => {
           </div>
         </div>
       </div>
+
       {/* Footer */}
       <Footer />
     </div>
