@@ -50,7 +50,7 @@ const PromotionalBanner: React.FC<PromotionalBannerProps> = ({ className = '' })
   return (
     <section className={`mb-8 ${className}`}>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Special Offers</h2>
+        <h2 className="text-2xl font-bold">Special Offers</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {promotionalItems.map((item) => (
@@ -69,7 +69,7 @@ const PromotionalBanner: React.FC<PromotionalBannerProps> = ({ className = '' })
                 {item.discount}% Off
               </div>
             </div>
-            <div className="p-4">
+            <div className="p-4 text-left">
               <h3 className="font-semibold text-gray-800">{item.name}</h3>
               <div className="mt-2 text-sm text-orange-500">
                 {item.daysRemaining} Days Remaining
