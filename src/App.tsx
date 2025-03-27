@@ -3,6 +3,7 @@ import { SidebarProvider } from "./components/layout/SidebarContext"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import SplashScreen from "./components/auth/SplashScreen"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import PromotionalBanner from "./components/promotions/PromotionalBanner"
 
 function App() {
   return (
@@ -136,6 +137,11 @@ function App() {
                       <p className="font-medium">Steak</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Promotional Banner */}
+                <div className="w-full max-w-6xl mx-auto px-4">
+                  <PromotionalBanner />
                 </div>
               </div>
             </Layout>

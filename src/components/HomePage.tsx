@@ -31,13 +31,14 @@ import MapView from "./ai/MapView";
 import RecommendationsSection from "./ai/RecommendationsSection";
 import TrendingSection from "./ai/TrendingSection";
 import QuickLinks from "./ai/QuickLinks";
+import PromotionalBanner from "./promotions/PromotionalBanner";
 
 interface Restaurant {
   id: string;
   name: string;
   image: string;
   deliveryTime: string;
-  rating: number;
+  rating?: number;
 }
 
 const HomePage = () => {
@@ -89,6 +90,7 @@ const HomePage = () => {
       image:
         "https://images.unsplash.com/photo-1550317138-10000687a72b?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
       deliveryTime: "20 min",
+      rating: 4.5
     },
     {
       id: "pizza",
@@ -96,6 +98,7 @@ const HomePage = () => {
       image:
         "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
       deliveryTime: "25 min",
+      rating: 4.3
     },
     {
       id: "sushi",
@@ -103,6 +106,7 @@ const HomePage = () => {
       image:
         "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
       deliveryTime: "30 min",
+      rating: 4.7
     },
     {
       id: "tacos",
@@ -110,6 +114,7 @@ const HomePage = () => {
       image:
         "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
       deliveryTime: "15 min",
+      rating: 4.4
     },
     {
       id: "indian",
@@ -117,6 +122,7 @@ const HomePage = () => {
       image:
         "https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
       deliveryTime: "35 min",
+      rating: 4.6
     },
     {
       id: "chinese",
@@ -124,6 +130,7 @@ const HomePage = () => {
       image:
         "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
       deliveryTime: "25 min",
+      rating: 4.2
     },
   ];
 
@@ -470,6 +477,9 @@ const HomePage = () => {
               ))}
             </div>
           </section>
+
+          {/* Promotional Banner */}
+          <PromotionalBanner className="mb-8" />
 
           {/* AI-Powered Recommendations */}
           <RecommendationsSection className="mb-8" />
