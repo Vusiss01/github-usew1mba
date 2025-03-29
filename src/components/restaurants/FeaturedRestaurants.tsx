@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { getOptimizedImageUrl } from '../../utils/imageLoader';
 import AppInstallSection from './AppInstallSection';
+import SandwichDealsSection from './SandwichDealsSection';
 
 interface Restaurant {
   id: string;
@@ -251,6 +252,7 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
       </section>
 
       <AppInstallSection />
+      <SandwichDealsSection />
     </>
   );
 };
