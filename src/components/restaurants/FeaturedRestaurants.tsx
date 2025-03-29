@@ -6,6 +6,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { getOptimizedImageUrl } from '../../utils/imageLoader';
 import AppInstallSection from './AppInstallSection';
 import SandwichDealsSection from './SandwichDealsSection';
+import FriedChickenSection from './FriedChickenSection';
 
 interface Restaurant {
   id: string;
@@ -251,8 +252,14 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
         </div>
       </section>
 
-      <AppInstallSection />
-      <SandwichDealsSection />
+      {/* App Install Section - Full Width */}
+      <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] my-8">
+        <AppInstallSection />
+      </div>
+      <div className="space-y-12">
+        <SandwichDealsSection />
+        <FriedChickenSection />
+      </div>
     </>
   );
 };
