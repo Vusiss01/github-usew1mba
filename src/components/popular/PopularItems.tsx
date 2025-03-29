@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import { getOptimizedImageUrl } from '../../utils/imageLoader';
 
 interface PopularItem {
   id: string;
@@ -16,40 +19,41 @@ interface PopularItemsProps {
 
 const PopularItems: React.FC<PopularItemsProps> = ({ className = '' }) => {
   const navigate = useNavigate();
+  const [imageLoaded, setImageLoaded] = useState<Record<string, boolean>>({});
 
   const popularItems: PopularItem[] = [
     {
       id: '1',
       name: 'Cheese Burger',
-      image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1568901346375-23c9450c58cd'),
       restaurant: 'Burger Arena',
       price: 3.88
     },
     {
       id: '2',
       name: "Toffe's Cake",
-      image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1587314168485-3236d6710814'),
       restaurant: 'Top Sticks',
       price: 4.00
     },
     {
       id: '3',
       name: 'Dancake',
-      image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1575312027309-11b6c99f341b'),
       restaurant: 'Cake World',
       price: 1.99
     },
     {
       id: '4',
       name: 'Crispy Sandwich',
-      image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1528735602780-2552fd46c7af'),
       restaurant: 'Fastfood Dine',
       price: 3.00
     },
     {
       id: '5',
       name: 'Thai Soup',
-      image: 'https://images.unsplash.com/photo-1547928576-a4a33237cbc3',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1547928576-a4a33237cbc3'),
       restaurant: 'Foody man',
       price: 2.79
     }
@@ -77,10 +81,17 @@ const PopularItems: React.FC<PopularItemsProps> = ({ className = '' }) => {
               onClick={() => navigate(`/item/${item.id}`)}
             >
               <div className="relative h-48">
-                <img
+                {!imageLoaded[item.id] && (
+                  <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+                )}
+                <LazyLoadImage
                   src={item.image}
                   alt={item.name}
+                  effect="blur"
                   className="w-full h-full object-cover"
+                  afterLoad={() => setImageLoaded(prev => ({ ...prev, [item.id]: true }))}
+                  placeholderSrc={`${item.image}&w=60&blur=50`}
+                  threshold={300}
                 />
               </div>
               <div className="p-4">

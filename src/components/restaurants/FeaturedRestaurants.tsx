@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Clock, Star, Tag } from 'lucide-react';
+import { Clock, Star, Tag, Gift, Percent, Trophy, Timer } from 'lucide-react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import { getOptimizedImageUrl } from '../../utils/imageLoader';
+import AppInstallSection from './AppInstallSection';
 
 interface Restaurant {
   id: string;
@@ -13,19 +17,28 @@ interface Restaurant {
   status: 'Opens tomorrow' | 'Open Now';
 }
 
+interface Promotion {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  bgColor: string;
+}
+
 interface FeaturedRestaurantsProps {
   className?: string;
 }
 
 const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '' }) => {
   const navigate = useNavigate();
+  const [imageLoaded, setImageLoaded] = useState<Record<string, boolean>>({});
 
-  const restaurants: Restaurant[] = [
+  const restaurants: Restaurant[] = useMemo(() => [
     {
       id: '1',
       name: 'Foodworld',
-      image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d',
-      logo: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="%234CAF50"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dy=".3em">FW</text></svg>',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1619683548293-c74defe8d5d2'), // Noodle bowl with egg and vegetables
+      logo: '#4361EE',
       rating: 46,
       discount: 20,
       isFast: true,
@@ -34,8 +47,8 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
     {
       id: '2',
       name: 'Pizzahub',
-      image: 'https://images.unsplash.com/photo-1540914124281-342587941389',
-      logo: 'https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=100&h=100&fit=crop',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b'), // Red cocktail drinks
+      logo: '#FFE600',
       rating: 40,
       discount: 15,
       isFast: true,
@@ -44,8 +57,8 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
     {
       id: '3',
       name: 'Donuts hut',
-      image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e',
-      logo: 'https://images.unsplash.com/photo-1514517604298-cf80e0fb7f1e?w=100&h=100&fit=crop',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b'), // Person working out in gym
+      logo: '#00B6FF',
       rating: 20,
       discount: 10,
       isFast: true,
@@ -54,8 +67,8 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
     {
       id: '4',
       name: 'Donuts hut',
-      image: 'https://images.unsplash.com/photo-1603532648955-039310d9ed75',
-      logo: 'https://images.unsplash.com/photo-1514517604298-cf80e0fb7f1e?w=100&h=100&fit=crop',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1603532648955-039310d9ed75'), // Pink and white cupcakes
+      logo: '#00B300',
       rating: 50,
       discount: 15,
       isFast: true,
@@ -64,8 +77,8 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
     {
       id: '5',
       name: 'Ruby Tuesday',
-      image: 'https://images.unsplash.com/photo-1546039907-7fa05f864c02',
-      logo: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=100&h=100&fit=crop',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1558030006-450675393462'), // Grilled steak with tomatoes
+      logo: '#1C1C1C',
       rating: 26,
       discount: 10,
       isFast: true,
@@ -74,8 +87,8 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
     {
       id: '6',
       name: 'Kuakata Fried Chicken',
-      image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58',
-      logo: 'data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="%23e4002b"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dy=".3em">KFC</text></svg>',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1562967914-608f82629710'), // Fried chicken with sauce
+      logo: '#4CAF50',
       rating: 53,
       discount: 25,
       isFast: true,
@@ -84,8 +97,8 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
     {
       id: '7',
       name: 'Red Square',
-      image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd',
-      logo: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=100&h=100&fit=crop',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd'), // Red curry soup
+      logo: '#FF0000',
       rating: 45,
       discount: 10,
       isFast: true,
@@ -94,69 +107,225 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
     {
       id: '8',
       name: 'Taco Bell',
-      image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47',
-      logo: 'https://images.unsplash.com/photo-1633321702518-7feccafb94d5?w=100&h=100&fit=crop',
+      image: getOptimizedImageUrl('https://images.unsplash.com/photo-1606851094291-6efae152bb87'), // Bacon and eggs in a pan
+      logo: '#FF9800',
       rating: 35,
       discount: 10,
       isFast: true,
       status: 'Opens tomorrow'
     }
-  ];
+  ], []);
+
+  const promotions: Promotion[] = useMemo(() => [
+    {
+      id: 'daily',
+      title: 'Daily Discounts',
+      description: 'Get up to 50% off on selected restaurants every day',
+      icon: <Percent className="w-6 h-6" />,
+      bgColor: 'bg-amber-50'
+    },
+    {
+      id: 'tracking',
+      title: 'Live Tracing',
+      description: 'Track your order in real-time with live updates',
+      icon: <Timer className="w-6 h-6" />,
+      bgColor: 'bg-amber-50'
+    },
+    {
+      id: 'delivery',
+      title: 'Quick Delivery',
+      description: 'Fast delivery to your doorstep within 30 minutes',
+      icon: <Clock className="w-6 h-6" />,
+      bgColor: 'bg-amber-50'
+    }
+  ], []);
+
+  const getInitials = (name: string) => {
+    return name.split(' ').map(word => word[0]).join('').toUpperCase();
+  };
 
   return (
-    <section className={`mb-8 ${className}`}>
-      <h2 className="text-2xl font-bold mb-6 text-center">Featured Restaurants</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {restaurants.map((restaurant) => (
-          <div
-            key={restaurant.id}
-            className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
-            onClick={() => navigate(`/restaurant/${restaurant.id}`)}
-          >
-            <div className="relative h-48">
-              <img
-                src={restaurant.image}
-                alt={restaurant.name}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 left-4 flex gap-2">
-                <span className="bg-orange-500 text-white px-2 py-1 rounded-md text-sm flex items-center">
-                  <Tag size={14} className="mr-1" />
-                  {restaurant.discount}% off
-                </span>
-                <span className="bg-amber-400 text-white px-2 py-1 rounded-md text-sm flex items-center">
-                  <Clock size={14} className="mr-1" />
-                  Fast
-                </span>
-              </div>
-            </div>
-            <div className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-100 rounded-lg overflow-hidden">
-                  <img
-                    src={restaurant.logo}
-                    alt={`${restaurant.name} logo`}
-                    className="w-full h-full object-contain"
-                  />
+    <>
+      <section className={`mb-8 ${className}`}>
+        <h2 className="text-2xl font-bold mb-6">Featured Restaurants</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {restaurants.map((restaurant) => (
+            <div
+              key={restaurant.id}
+              className="flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer"
+              onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+            >
+              <div className="relative w-full h-44">
+                {!imageLoaded[restaurant.id] && (
+                  <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+                )}
+                <LazyLoadImage
+                  src={restaurant.image}
+                  alt={restaurant.name}
+                  effect="blur"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  afterLoad={() => setImageLoaded(prev => ({ ...prev, [restaurant.id]: true }))}
+                  placeholderSrc={`${restaurant.image}&w=60&blur=50`}
+                  threshold={300}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute top-4 left-4 flex items-center gap-2 z-10">
+                  <span className="bg-orange-500 text-white px-2 py-1 rounded-md text-xs flex items-center">
+                    <Tag size={12} className="mr-1" />
+                    {restaurant.discount}% off
+                  </span>
+                  <span className="bg-amber-400 text-white px-2 py-1 rounded-md text-xs flex items-center">
+                    <Clock size={12} className="mr-1" />
+                    Fast
+                  </span>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-800">{restaurant.name}</h3>
-                  <div className="flex items-center gap-1">
-                    <Star size={14} className="text-amber-400 fill-current" />
-                    <span className="text-sm text-gray-600">{restaurant.rating}</span>
+              </div>
+              <div className="p-3 flex flex-row items-start gap-2">
+                <div 
+                  className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center text-white text-xs font-medium"
+                  style={{ backgroundColor: restaurant.logo }}
+                >
+                  {getInitials(restaurant.name)}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium text-gray-800 text-sm truncate">{restaurant.name}</h3>
+                    <div className="flex items-center gap-1 ml-2 flex-shrink-0">
+                      <Star size={12} className="text-amber-400 fill-current" />
+                      <span className="text-xs text-gray-600">{restaurant.rating}</span>
+                    </div>
+                  </div>
+                  <div className={`text-xs ${
+                    restaurant.status === 'Open Now' ? 'text-green-500' : 'text-orange-500'
+                  }`}>
+                    {restaurant.status}
                   </div>
                 </div>
               </div>
-              <div className={`mt-3 text-sm ${
-                restaurant.status === 'Open Now' ? 'text-green-500' : 'text-orange-500'
-              }`}>
-                {restaurant.status}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-8">
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="p-6">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Your Special Offers</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {promotions.map((promo) => (
+                <div
+                  key={promo.id}
+                  className={`${promo.bgColor} rounded-xl p-4 cursor-pointer transition-transform hover:scale-[1.02] group`}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-lg bg-white/80 backdrop-blur-sm flex items-center justify-center text-orange-500">
+                      {promo.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-orange-500 font-semibold text-lg group-hover:text-orange-600">
+                        {promo.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm mt-1">
+                        {promo.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-gray-100 bg-orange-50/50">
+            <div className="p-4 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-orange-500">
+                <Gift className="w-5 h-5" />
+                <span className="text-sm font-medium">Available Rewards</span>
+              </div>
+              <button className="text-orange-500 hover:text-orange-600 text-sm font-medium">
+                View All Offers →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mb-8 relative">
+        <div className="bg-gradient-to-b from-amber-50 to-orange-100 rounded-3xl overflow-hidden">
+          <div className="container mx-auto px-4 py-16">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="relative w-full lg:w-1/2 flex justify-center">
+                <div className="relative">
+                  <div className="absolute -left-24 top-8 w-64 h-auto opacity-60 blur-sm">
+                    <img
+                      src="/mockup-bg.png"
+                      alt="App Interface Background"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  <div className="relative z-10 w-72">
+                    <img
+                      src="/mockup-main.png"
+                      alt="Food Delivery App Interface"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full lg:w-1/2 text-center lg:text-left">
+                <h2 className="text-4xl lg:text-5xl font-bold text-orange-500 mb-4">
+                  Install the app
+                </h2>
+                <p className="text-gray-600 text-lg mb-8 max-w-lg">
+                  It's never been easier to order food. Look for the finest discounts and you'll be lost in a world of delectable food.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <a
+                    href="#"
+                    className="flex items-center bg-white rounded-xl px-6 py-3 shadow-sm hover:shadow-md transition-shadow duration-300"
+                  >
+                    <img
+                      src="/google-play.png"
+                      alt="Get it on Google Play"
+                      className="h-8"
+                    />
+                  </a>
+                  
+                  <a
+                    href="#"
+                    className="flex items-center bg-white rounded-xl px-6 py-3 shadow-sm hover:shadow-md transition-shadow duration-300"
+                  >
+                    <img
+                      src="/app-store.png"
+                      alt="Download on the App Store"
+                      className="h-8"
+                    />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        ))}
-      </div>
-    </section>
+
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg
+              viewBox="0 0 1440 120"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-auto"
+            >
+              <path
+                d="M0 0L60 10C120 20 240 40 360 46.7C480 53.3 600 46.7 720 43.3C840 40 960 40 1080 43.3C1200 46.7 1320 53.3 1380 56.7L1440 60V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <AppInstallSection />
+    </>
   );
 };
 
