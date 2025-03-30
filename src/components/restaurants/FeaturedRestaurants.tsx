@@ -7,6 +7,8 @@ import { getOptimizedImageUrl } from '../../utils/imageLoader';
 import AppInstallSection from './AppInstallSection';
 import SandwichDealsSection from './SandwichDealsSection';
 import FriedChickenSection from './FriedChickenSection';
+import SpicyPizzaSection from './SpicyPizzaSection';
+import FinalCallToAction from './FinalCallToAction';
 
 interface Restaurant {
   id: string;
@@ -256,9 +258,13 @@ const FeaturedRestaurants: React.FC<FeaturedRestaurantsProps> = ({ className = '
       <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] my-8">
         <AppInstallSection />
       </div>
-      <div className="space-y-12">
+      <div className="space-y-12 mb-12">
         <SandwichDealsSection />
         <FriedChickenSection />
+        <SpicyPizzaSection />
+      </div>
+      <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw]">
+        <FinalCallToAction />
       </div>
     </>
   );
