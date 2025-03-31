@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
 import { useSidebar } from './SidebarContext';
 import Logo from './Logo';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -36,6 +37,7 @@ export default function Header({
   const [location, setLocation] = useState('12 Roncroft Dr');
   const [isRecording, setIsRecording] = useState(false);
   const { toggleSidebar } = useSidebar();
+  const navigate = useNavigate();
 
   const handleVoiceOrder = () => {
     setIsRecording(!isRecording);
@@ -65,11 +67,13 @@ export default function Header({
           <div className="flex items-center space-x-4 md:hidden pr-6">
             <button
               className="text-sm font-medium hover:text-orange-500"
+              onClick={() => navigate("/login")}
             >
               Log in
             </button>
             <button
               className="text-sm font-medium hover:text-orange-500"
+              onClick={() => navigate("/signup")}
             >
               Sign up
             </button>
@@ -180,11 +184,13 @@ export default function Header({
           <div className="hidden md:flex items-center space-x-4">
             <button
               className="text-sm font-medium hover:text-orange-500"
+              onClick={() => navigate("/login")}
             >
               Log in
             </button>
             <button
               className="text-sm font-medium hover:text-orange-500"
+              onClick={() => navigate("/signup")}
             >
               Sign up
             </button>

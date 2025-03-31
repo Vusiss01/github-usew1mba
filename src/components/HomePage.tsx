@@ -407,13 +407,13 @@ const HomePage = () => {
             <div className="flex items-center space-x-4">
               <button
                 className="text-sm font-medium hover:text-orange-500"
-                onClick={() => navigate("/auth")}
+                onClick={() => navigate("/login")}
               >
                 Log in
               </button>
               <button
                 className="text-sm font-medium hover:text-orange-500"
-                onClick={() => navigate("/auth")}
+                onClick={() => navigate("/signup")}
               >
                 Sign up
               </button>

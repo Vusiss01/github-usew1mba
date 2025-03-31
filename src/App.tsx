@@ -2,6 +2,8 @@ import { Layout } from "./components/layout/Layout"
 import { SidebarProvider } from "./components/layout/SidebarContext"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import SplashScreen from "./components/auth/SplashScreen"
+import LoginPage from "./pages/auth/LoginPage"
+import SignUpPage from "./pages/auth/SignUpPage"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import PromotionalBanner from "./components/promotions/PromotionalBanner"
 import PopularItems from "./components/popular/PopularItems"
@@ -13,6 +15,8 @@ function App() {
       <SidebarProvider>
         <Routes>
           <Route path="/splash" element={<SplashScreen />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={
             <Layout>
               <div className="flex flex-col space-y-8">
