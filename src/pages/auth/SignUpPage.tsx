@@ -4,6 +4,8 @@ import { Eye, EyeOff, MapPin } from 'lucide-react';
 import Logo from '../../components/layout/Logo';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
+import AppStoreButtons from '../../components/common/AppStoreButtons';
+import SocialSignIn from '../../components/auth/SocialSignIn';
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
@@ -17,6 +19,11 @@ const SignUpPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSocialSignIn = (provider: string) => {
+    // Implement social sign-in logic here
+    console.log(`Signing up with ${provider}`);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -85,6 +92,11 @@ const SignUpPage: React.FC = () => {
             <h1 className="mt-6 text-2xl font-bold">Create your account</h1>
             <p className="mt-2 text-gray-600">Join us and start ordering delicious food</p>
           </div>
+
+          <SocialSignIn 
+            onSignIn={handleSocialSignIn}
+            className="mb-6"
+          />
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -221,9 +233,9 @@ const SignUpPage: React.FC = () => {
         <div className="mt-8 pt-8 border-t border-gray-200">
           <p className="text-xs text-gray-500">
             By creating an account, you agree to our{' '}
-            <a href="#" className="text-orange-500 hover:text-orange-600">Terms of Service</a>
+            <Link to="/terms" className="text-orange-500 hover:text-orange-600">Terms of Service</Link>
             {' '}and{' '}
-            <a href="#" className="text-orange-500 hover:text-orange-600">Privacy Policy</a>
+            <Link to="/privacy" className="text-orange-500 hover:text-orange-600">Privacy Policy</Link>
           </p>
         </div>
       </div>
@@ -246,10 +258,7 @@ const SignUpPage: React.FC = () => {
               <MapPin className="h-5 w-5" />
               <span>Available in major cities across the country</span>
             </div>
-            <div className="flex space-x-4">
-              <img src="/images/app-store.png" alt="Download on App Store" className="h-10" />
-              <img src="/images/google-play.png" alt="Get it on Google Play" className="h-10" />
-            </div>
+            <AppStoreButtons buttonClassName="h-12" />
           </div>
         </div>
       </div>
