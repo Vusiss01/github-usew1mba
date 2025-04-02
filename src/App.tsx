@@ -7,6 +7,7 @@ import SignUpPage from "./pages/auth/SignUpPage"
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage"
 import TermsOfServicePage from "./pages/legal/TermsOfServicePage"
 import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage"
+import ProfilePage from "./pages/profile/ProfilePage"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import PromotionalBanner from "./components/promotions/PromotionalBanner"
 import PopularItems from "./components/popular/PopularItems"
@@ -23,6 +24,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/" element={
             <Layout>
               <div className="flex flex-col space-y-8">

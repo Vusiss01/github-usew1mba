@@ -23,7 +23,7 @@ export function Layout({ children }: LayoutProps) {
     { icon: Home, label: 'Home', href: '/' },
     { icon: Store, label: 'Restaurants', href: '/restaurants' },
     { icon: Clock, label: 'Orders', href: '/orders' },
-    { icon: User, label: 'Account', href: '/account' },
+    { icon: User, label: 'Profile', href: '/profile' },
     { icon: Settings, label: 'Settings', href: '/settings' },
   ];
 
