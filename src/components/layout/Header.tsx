@@ -8,7 +8,7 @@ import {
   Menu,
   Mic,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import { Input } from '../ui/input';
 import { useSidebar } from './SidebarContext';
 import Logo from './Logo';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie } from 'lucide-react';
 import { Button } from '../../components/ui/button';
@@ -38,6 +38,9 @@ const ProfilePage: React.FC = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<string>('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&h=250&q=80');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -52,6 +55,52 @@ const ProfilePage: React.FC = () => {
     setIsEditing(false);
     // TODO: Implement profile update logic
     console.log('Profile updated:', profileData);
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const openImageUploadDialog = () => {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'p-4 rounded-lg shadow-lg bg-white';
+    dialog.innerHTML = `
+      <div class="space-y-4">
+        <h3 class="text-lg font-semibold text-center">Upload Profile Picture</h3>
+        <div class="flex justify-center space-x-4">
+          <button id="camera-btn" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+            Take Photo
+          </button>
+          <button id="upload-btn" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+            Choose File
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(dialog);
+    dialog.showModal();
+
+    dialog.querySelector('#camera-btn')?.addEventListener('click', () => {
+      cameraInputRef.current?.click();
+      dialog.close();
+    });
+
+    dialog.querySelector('#upload-btn')?.addEventListener('click', () => {
+      fileInputRef.current?.click();
+      dialog.close();
+    });
+
+    dialog.addEventListener('close', () => {
+      document.body.removeChild(dialog);
+    });
   };
 
   const categories: PurchaseCategory[] = [
@@ -104,18 +153,19 @@ const ProfilePage: React.FC = () => {
           </div>
           <div className="absolute -bottom-16 left-8 flex items-end space-x-6">
             <div className="relative">
-              <div className="w-32 h-32 bg-white rounded-2xl shadow-xl p-1">
-                <div className="w-full h-full bg-gradient-to-br from-orange-100 to-orange-50 rounded-xl overflow-hidden">
-                  <img
-                    src="https://via.placeholder.com/128"
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <button className="absolute -bottom-2 -right-2 p-2.5 bg-orange-500 rounded-xl text-white hover:bg-orange-600 shadow-lg transform transition-transform hover:scale-105">
-                  <Camera size={18} />
-                </button>
+              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
               </div>
+              <button
+                onClick={openImageUploadDialog}
+                className="absolute bottom-0 right-0 p-2 bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-600 transition-colors"
+              >
+                <Camera className="w-5 h-5" />
+              </button>
             </div>
             <div className="mb-4 text-white">
               <h1 className="text-3xl font-bold">{profileData.fullName}</h1>

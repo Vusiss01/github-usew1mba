@@ -24,7 +24,11 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={
+            <Layout>
+              <ProfilePage />
+            </Layout>
+          } />
           <Route path="/" element={
             <Layout>
               <div className="flex flex-col space-y-8">
