@@ -13,6 +13,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import PromotionalBanner from "./components/promotions/PromotionalBanner"
 import PopularItems from "./components/popular/PopularItems"
 import FeaturedRestaurants from "./components/restaurants/FeaturedRestaurants"
+import ManageAddressesPage from './pages/profile/ManageAddressesPage';
+import PaymentMethodsPage from './pages/profile/PaymentMethodsPage';
+import ChangePasswordPage from './pages/profile/ChangePasswordPage';
 
 function App() {
   return (
@@ -33,6 +36,21 @@ function App() {
           <Route path="/profile" element={
             <Layout>
               <ProfilePage />
+            </Layout>
+          } />
+          <Route path="/profile/addresses" element={
+            <Layout>
+              <ManageAddressesPage />
+            </Layout>
+          } />
+          <Route path="/profile/payment-methods" element={
+            <Layout>
+              <PaymentMethodsPage />
+            </Layout>
+          } />
+          <Route path="/profile/change-password" element={
+            <Layout>
+              <ChangePasswordPage />
             </Layout>
           } />
           <Route path="/" element={

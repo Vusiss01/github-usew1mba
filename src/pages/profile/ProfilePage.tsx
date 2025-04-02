@@ -198,21 +198,29 @@ const ProfilePage: React.FC = () => {
             </div>
           </div>
           <div className="absolute -bottom-16 right-8 flex items-center gap-2">
-            <Button 
-              variant="outline" 
-              className="bg-white hover:bg-gray-50"
-              onClick={() => window.location.href = `mailto:${profileData.email}`}
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 bg-white"
+              onClick={() => navigate('/profile/addresses')}
             >
-              <Mail size={18} className="mr-2" />
-              Contact
+              <MapPin className="h-4 w-4" />
+              Manage Addresses
             </Button>
-            <Button 
-              variant="outline" 
-              className="bg-white hover:bg-gray-50"
-              onClick={() => navigate('/messages')}
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 bg-white"
+              onClick={() => navigate('/profile/payment-methods')}
             >
-              <MessageSquare size={18} className="mr-2" />
-              Message
+              <CreditCard className="h-4 w-4" />
+              Payment Methods
+            </Button>
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 bg-white"
+              onClick={() => navigate('/profile/change-password')}
+            >
+              <Lock className="h-4 w-4" />
+              Change Password
             </Button>
           </div>
         </div>

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Send, Search } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Send, Search, Image, Smile, Paperclip, Bell, MoreVertical } from 'lucide-react';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 
 interface Message {
   id: string;
@@ -10,7 +12,11 @@ interface Message {
   avatar: string;
   content: string;
   timestamp: string;
-  unread?: boolean;
+  attachments?: {
+    type: 'image' | 'file';
+    url: string;
+    name: string;
+  }[];
 }
 
 interface Chat {
@@ -21,12 +27,18 @@ interface Chat {
   lastMessage: string;
   timestamp: string;
   unread: number;
+  online?: boolean;
 }
 
 export default function MessagesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [notifications, setNotifications] = useState<boolean>(true);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [isTyping, setIsTyping] = useState(false);
 
   // Mock data for chats
   const chats: Chat[] = [
@@ -38,6 +50,7 @@ export default function MessagesPage() {
       lastMessage: 'Your order is being prepared',
       timestamp: '10:30 AM',
       unread: 2,
+      online: true,
     },
     {
       id: '2',
@@ -47,6 +60,7 @@ export default function MessagesPage() {
       lastMessage: 'I am 5 minutes away',
       timestamp: 'Yesterday',
       unread: 0,
+      online: true,
     },
     {
       id: '3',
@@ -56,6 +70,7 @@ export default function MessagesPage() {
       lastMessage: 'How can we help you today?',
       timestamp: '2 days ago',
       unread: 1,
+      online: false,
     },
   ];
 
@@ -84,16 +99,53 @@ export default function MessagesPage() {
       avatar: 'https://images.unsplash.com/photo-1513104890138-7c749659a591',
       content: 'It should be ready in about 15-20 minutes',
       timestamp: '10:32 AM',
+      attachments: [
+        {
+          type: 'image',
+          url: 'https://images.unsplash.com/photo-1513104890138-7c749659a591',
+          name: 'pizza-preparation.jpg',
+        },
+      ],
     },
   ];
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
       // Here you would typically send the message to your backend
       console.log('Sending message:', newMessage);
       setNewMessage('');
+      setIsTyping(false);
     }
   };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Here you would typically upload the file to your backend
+      console.log('Uploading file:', file);
+    }
+  };
+
+  const handleEmojiSelect = (emoji: any) => {
+    setNewMessage(prev => prev + emoji.native);
+    setShowEmojiPicker(false);
+  };
+
+  const toggleNotifications = () => {
+    setNotifications(!notifications);
+  };
+
+  const filteredChats = chats.filter(chat =>
+    chat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -114,7 +166,7 @@ export default function MessagesPage() {
                 />
               </div>
               <div className="space-y-2">
-                {chats.map((chat) => (
+                {filteredChats.map((chat) => (
                   <div
                     key={chat.id}
                     className={`flex items-center p-3 rounded-lg cursor-pointer hover:bg-gray-50 ${
@@ -122,11 +174,16 @@ export default function MessagesPage() {
                     }`}
                     onClick={() => setSelectedChat(chat.id)}
                   >
-                    <img
-                      src={chat.avatar}
-                      alt={chat.name}
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
+                    <div className="relative">
+                      <img
+                        src={chat.avatar}
+                        alt={chat.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      {chat.online && (
+                        <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+                      )}
+                    </div>
                     <div className="ml-3 flex-1">
                       <div className="flex justify-between items-start">
                         <h3 className="font-semibold">{chat.name}</h3>
@@ -151,19 +208,43 @@ export default function MessagesPage() {
               <>
                 {/* Chat Header */}
                 <div className="p-4 border-b border-gray-200">
-                  <div className="flex items-center">
-                    <img
-                      src={chats.find(c => c.id === selectedChat)?.avatar}
-                      alt="Chat"
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                    <div className="ml-3">
-                      <h3 className="font-semibold">
-                        {chats.find(c => c.id === selectedChat)?.name}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {chats.find(c => c.id === selectedChat)?.type}
-                      </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className="relative">
+                        <img
+                          src={chats.find(c => c.id === selectedChat)?.avatar}
+                          alt="Chat"
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        {chats.find(c => c.id === selectedChat)?.online && (
+                          <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+                        )}
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="font-semibold">
+                          {chats.find(c => c.id === selectedChat)?.name}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {isTyping ? 'Typing...' : chats.find(c => c.id === selectedChat)?.type}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={toggleNotifications}
+                        className={`hover:bg-gray-100 ${notifications ? 'text-orange-500' : 'text-gray-500'}`}
+                      >
+                        <Bell className="h-5 w-5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="hover:bg-gray-100"
+                      >
+                        <MoreVertical className="h-5 w-5" />
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -195,6 +276,22 @@ export default function MessagesPage() {
                           }`}
                         >
                           <p>{message.content}</p>
+                          {message.attachments?.map((attachment, index) => (
+                            <div key={index} className="mt-2">
+                              {attachment.type === 'image' ? (
+                                <img
+                                  src={attachment.url}
+                                  alt={attachment.name}
+                                  className="rounded-lg max-w-xs"
+                                />
+                              ) : (
+                                <div className="flex items-center gap-2 bg-white rounded p-2">
+                                  <Paperclip className="h-4 w-4" />
+                                  <span>{attachment.name}</span>
+                                </div>
+                              )}
+                            </div>
+                          ))}
                           <span className="text-xs text-gray-500 mt-1 block">
                             {message.timestamp}
                           </span>
@@ -202,22 +299,69 @@ export default function MessagesPage() {
                       </div>
                     </div>
                   ))}
+                  <div ref={messagesEndRef} />
                 </div>
 
                 {/* Message Input */}
                 <div className="p-4 border-t border-gray-200">
-                  <div className="flex items-center space-x-2">
-                    <Input
-                      type="text"
-                      placeholder="Type a message..."
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                          handleSendMessage();
-                        }
-                      }}
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="hover:bg-gray-100"
+                    >
+                      <Paperclip className="h-5 w-5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="hover:bg-gray-100"
+                    >
+                      <Image className="h-5 w-5" />
+                    </Button>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      className="hidden"
+                      onChange={handleFileUpload}
+                      accept="image/*,.pdf,.doc,.docx"
                     />
+                    <div className="relative flex-1">
+                      <Input
+                        type="text"
+                        placeholder="Type a message..."
+                        value={newMessage}
+                        onChange={(e) => {
+                          setNewMessage(e.target.value);
+                          setIsTyping(true);
+                        }}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            handleSendMessage();
+                          }
+                        }}
+                        className="pr-10"
+                      />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-transparent"
+                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                      >
+                        <Smile className="h-5 w-5 text-gray-500" />
+                      </Button>
+                      {showEmojiPicker && (
+                        <div className="absolute bottom-full right-0 mb-2">
+                          <Picker
+                            data={data}
+                            onEmojiSelect={handleEmojiSelect}
+                            theme="light"
+                          />
+                        </div>
+                      )}
+                    </div>
                     <Button
                       onClick={handleSendMessage}
                       className="bg-orange-500 hover:bg-orange-600"
