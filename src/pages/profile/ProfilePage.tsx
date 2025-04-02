@@ -1,9 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe } from 'lucide-react';
+import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { motion } from 'framer-motion';
+
+interface PurchaseCategory {
+  id: string;
+  name: string;
+  icon: React.ReactNode;
+  count: number;
+}
+
+interface PurchasedMeal {
+  id: string;
+  name: string;
+  category: string;
+  restaurant: string;
+  date: string;
+  price: number;
+  imageUrl: string;
+}
 
 const ProfilePage: React.FC = () => {
   const [profileData, setProfileData] = useState({
@@ -20,6 +37,7 @@ const ProfilePage: React.FC = () => {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -36,13 +54,44 @@ const ProfilePage: React.FC = () => {
     console.log('Profile updated:', profileData);
   };
 
-  const categories = [
-    'All Categories', 'Breakfast & Brunch', 'Desserts', 'Salad', 'Soup', 'Snack', 'Drink'
+  const categories: PurchaseCategory[] = [
+    { id: 'breakfast', name: 'Breakfast & Brunch', icon: <Coffee className="w-5 h-5" />, count: 15 },
+    { id: 'desserts', name: 'Desserts', icon: <Cake className="w-5 h-5" />, count: 8 },
+    { id: 'salads', name: 'Salads', icon: <Salad className="w-5 h-5" />, count: 6 },
+    { id: 'soups', name: 'Soups', icon: <Soup className="w-5 h-5" />, count: 4 },
+    { id: 'snacks', name: 'Snacks', icon: <Cookie className="w-5 h-5" />, count: 12 },
   ];
+
+  // Mock data for purchased meals
+  const purchasedMeals: PurchasedMeal[] = [
+    {
+      id: '1',
+      name: 'Classic Pancakes',
+      category: 'breakfast',
+      restaurant: "Morning Delight Cafe",
+      date: '2024-03-15',
+      price: 12.99,
+      imageUrl: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445',
+    },
+    {
+      id: '2',
+      name: 'Chocolate Cake',
+      category: 'desserts',
+      restaurant: "Sweet Treats Bakery",
+      date: '2024-03-14',
+      price: 8.99,
+      imageUrl: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587',
+    },
+    // Add more mock data as needed
+  ];
+
+  const filteredMeals = selectedCategory 
+    ? purchasedMeals.filter(meal => meal.category === selectedCategory)
+    : purchasedMeals;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
-      <div className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {/* Profile Header */}
         <div className="relative mb-8">
           <div className="h-48 bg-gradient-to-r from-orange-400 to-orange-600 rounded-2xl shadow-lg overflow-hidden">
@@ -100,17 +149,80 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Categories */}
-        <div className="flex items-center gap-4 mb-8 overflow-x-auto pb-4">
-          {categories.map((category, index) => (
-            <Button
-              key={category}
-              variant={index === 0 ? "default" : "outline"}
-              className={index === 0 ? "bg-orange-500 hover:bg-orange-600" : "bg-white hover:bg-gray-50"}
-            >
-              {category}
-            </Button>
-          ))}
+        {/* Purchase History Section */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold mb-6">Purchase History</h2>
+          
+          {/* Categories */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+            {categories.map(category => (
+              <motion.button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id === selectedCategory ? null : category.id)}
+                className={`p-4 rounded-xl border transition-all ${
+                  category.id === selectedCategory
+                    ? 'border-orange-500 bg-orange-50'
+                    : 'border-gray-200 hover:border-orange-500 hover:bg-orange-50'
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className={`p-3 rounded-full mb-2 ${
+                    category.id === selectedCategory ? 'bg-orange-500 text-white' : 'bg-gray-100'
+                  }`}>
+                    {category.icon}
+                  </div>
+                  <h3 className="font-medium text-sm mb-1">{category.name}</h3>
+                  <span className="text-sm text-gray-500">{category.count} items</span>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Meals Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {filteredMeals.map(meal => (
+              <motion.div
+                key={meal.id}
+                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                whileHover={{ y: -4 }}
+              >
+                <div className="aspect-square relative">
+                  <img
+                    src={meal.imageUrl}
+                    alt={meal.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-medium mb-1">{meal.name}</h3>
+                  <p className="text-sm text-gray-500 mb-2">{meal.restaurant}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">
+                      {new Date(meal.date).toLocaleDateString()}
+                    </span>
+                    <span className="font-medium text-orange-500">
+                      ${meal.price.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {filteredMeals.length === 0 && (
+            <div className="text-center py-12">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <ChevronRight className="w-8 h-8 text-orange-500" />
+              </div>
+              <h3 className="text-lg font-medium text-gray-900">No purchases found</h3>
+              <p className="text-gray-500 mt-1">
+                You haven't made any purchases in this category yet.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Main Content */}
