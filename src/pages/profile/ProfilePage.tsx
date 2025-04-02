@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie, MessageCircle } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { motion } from 'framer-motion';
+import ShareProfile from '../../components/ShareProfile';
 
 interface PurchaseCategory {
   id: string;
@@ -41,6 +42,8 @@ const ProfilePage: React.FC = () => {
   const [profileImage, setProfileImage] = useState<string>('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&h=250&q=80');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -141,6 +144,24 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
       <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        {/* Top Action Buttons */}
+        <div className="flex justify-end space-x-4 mb-6">
+          <Button
+            onClick={() => navigate('/messages')}
+            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Messages
+          </Button>
+          <Button
+            onClick={() => setIsShareModalOpen(true)}
+            className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white"
+          >
+            <Share2 className="h-4 w-4" />
+            Share Profile
+          </Button>
+        </div>
+
         {/* Profile Header */}
         <div className="relative mb-8">
           <div className="h-48 bg-gradient-to-r from-orange-400 to-orange-600 rounded-2xl shadow-lg overflow-hidden">
@@ -177,11 +198,19 @@ const ProfilePage: React.FC = () => {
             </div>
           </div>
           <div className="absolute -bottom-16 right-8 flex items-center gap-2">
-            <Button variant="outline" className="bg-white hover:bg-gray-50">
-              <Share2 size={18} className="mr-2" />
-              Share
+            <Button 
+              variant="outline" 
+              className="bg-white hover:bg-gray-50"
+              onClick={() => window.location.href = `mailto:${profileData.email}`}
+            >
+              <Mail size={18} className="mr-2" />
+              Contact
             </Button>
-            <Button variant="outline" className="bg-white hover:bg-gray-50">
+            <Button 
+              variant="outline" 
+              className="bg-white hover:bg-gray-50"
+              onClick={() => navigate('/messages')}
+            >
               <MessageSquare size={18} className="mr-2" />
               Message
             </Button>
@@ -479,6 +508,12 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <ShareProfile
+        username="demo-user" // Replace with actual username
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+      />
     </div>
   );
 };
