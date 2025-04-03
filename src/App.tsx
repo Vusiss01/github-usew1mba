@@ -16,6 +16,9 @@ import FeaturedRestaurants from "./components/restaurants/FeaturedRestaurants"
 import ManageAddressesPage from './pages/profile/ManageAddressesPage';
 import PaymentMethodsPage from './pages/profile/PaymentMethodsPage';
 import ChangePasswordPage from './pages/profile/ChangePasswordPage';
+import PreferredDietPage from './pages/profile/PreferredDietPage';
+import SpecialOccasionsPage from './pages/profile/SpecialOccasionsPage';
+import CateringPage from './pages/profile/CateringPage';
 
 function App() {
   return (
@@ -51,6 +54,21 @@ function App() {
           <Route path="/profile/change-password" element={
             <Layout>
               <ChangePasswordPage />
+            </Layout>
+          } />
+          <Route path="/profile/preferred-diet" element={
+            <Layout>
+              <PreferredDietPage />
+            </Layout>
+          } />
+          <Route path="/profile/special-occasions" element={
+            <Layout>
+              <SpecialOccasionsPage />
+            </Layout>
+          } />
+          <Route path="/profile/catering" element={
+            <Layout>
+              <CateringPage />
             </Layout>
           } />
           <Route path="/" element={

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie, MessageCircle, Calendar, UtensilsCrossed } from 'lucide-react';
+import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie, MessageCircle, Calendar, UtensilsCrossed, Utensils } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { motion } from 'framer-motion';
@@ -443,51 +443,39 @@ const ProfilePage: React.FC = () => {
           {/* Right Column */}
           <div className="space-y-8">
             {/* Quick Actions */}
-            <div className="bg-white rounded-2xl shadow-sm p-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-8">Quick Actions</h2>
-              
+            <div className="rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="mb-6 text-xl font-semibold text-gray-900">Quick Actions</h2>
               <div className="flex flex-col space-y-4">
-                <Button
-                  variant="ghost"
-                  className="w-full flex items-center px-6 py-3 hover:bg-orange-50/60 rounded-xl group"
+                <button 
                   onClick={() => navigate('/profile/preferred-diet')}
+                  className="flex items-center rounded-lg p-3 transition-all hover:bg-orange-50/40"
                 >
-                  <div className="flex items-center w-full">
-                    <div className="shrink-0 w-12 h-12 bg-orange-50 rounded-xl p-2.5 flex items-center justify-center">
-                      <Salad className="h-6 w-6 text-orange-500" />
-                    </div>
-                    <span className="ml-4 text-lg font-medium text-gray-900">Preferred Diet</span>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transition-colors ml-auto" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-50">
+                    <Utensils className="h-6 w-6 text-orange-500" />
                   </div>
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  className="w-full flex items-center px-6 py-3 hover:bg-orange-50/60 rounded-xl group"
+                  <span className="ml-4 text-base font-medium text-gray-900">Preferred Diet</span>
+                  <ChevronRight className="ml-auto h-5 w-5 text-gray-400" />
+                </button>
+                <button 
                   onClick={() => navigate('/profile/special-occasions')}
+                  className="flex items-center rounded-lg p-3 transition-all hover:bg-orange-50/40"
                 >
-                  <div className="flex items-center w-full">
-                    <div className="shrink-0 w-12 h-12 bg-orange-50 rounded-xl p-2.5 flex items-center justify-center">
-                      <Calendar className="h-6 w-6 text-orange-500" />
-                    </div>
-                    <span className="ml-4 text-lg font-medium text-gray-900">Special Occasions</span>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transition-colors ml-auto" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-50">
+                    <Calendar className="h-6 w-6 text-orange-500" />
                   </div>
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  className="w-full flex items-center px-6 py-3 hover:bg-orange-50/60 rounded-xl group"
+                  <span className="ml-4 text-base font-medium text-gray-900">Special Occasions</span>
+                  <ChevronRight className="ml-auto h-5 w-5 text-gray-400" />
+                </button>
+                <button 
                   onClick={() => navigate('/profile/catering')}
+                  className="flex items-center rounded-lg p-3 transition-all hover:bg-orange-50/40"
                 >
-                  <div className="flex items-center w-full">
-                    <div className="shrink-0 w-12 h-12 bg-orange-50 rounded-xl p-2.5 flex items-center justify-center">
-                      <UtensilsCrossed className="h-6 w-6 text-orange-500" />
-                    </div>
-                    <span className="ml-4 text-lg font-medium text-gray-900">Catering</span>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transition-colors ml-auto" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-50">
+                    <UtensilsCrossed className="h-6 w-6 text-orange-500" />
                   </div>
-                </Button>
+                  <span className="ml-4 text-base font-medium text-gray-900">Catering</span>
+                  <ChevronRight className="ml-auto h-5 w-5 text-gray-400" />
+                </button>
               </div>
             </div>
 
