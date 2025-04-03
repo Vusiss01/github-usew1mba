@@ -41,7 +41,10 @@ const Sidebar = () => {
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
-          onClick={toggleSidebar}
+          onClick={(e) => {
+            e.preventDefault();
+            toggleSidebar();
+          }}
         />
       )}
 
@@ -50,11 +53,17 @@ const Sidebar = () => {
         className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
-        onMouseLeave={toggleSidebar}
+        onMouseLeave={(e) => {
+          e.preventDefault();
+          toggleSidebar();
+        }}
       >
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
           <h2 className="text-xl font-bold">Menu</h2>
-          <Button variant="ghost" size="icon" onClick={toggleSidebar}>
+          <Button variant="ghost" size="icon" onClick={(e) => {
+            e.preventDefault();
+            toggleSidebar();
+          }}>
             <X className="h-5 w-5" />
           </Button>
         </div>
