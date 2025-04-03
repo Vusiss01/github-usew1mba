@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie, MessageCircle } from 'lucide-react';
+import { Camera, MapPin, Bell, Lock, CreditCard, LogOut, ChevronRight, Share2, MessageSquare, Globe, User, Mail, Phone, Coffee, Cake, Salad, Soup, Cookie, MessageCircle, Calendar, UtensilsCrossed } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { motion } from 'framer-motion';
@@ -443,51 +443,53 @@ const ProfilePage: React.FC = () => {
           {/* Right Column */}
           <div className="space-y-8">
             {/* Quick Actions */}
-            <motion.div 
-              className="bg-white rounded-2xl shadow-sm p-6 hover:shadow-md transition-shadow"
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.2 }}
-            >
-              <h2 className="text-xl font-semibold mb-6">Quick Actions</h2>
-              <div className="space-y-3">
-                <Link
-                  to="/addresses"
-                  className="flex items-center justify-between p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors group"
+            <div className="bg-white rounded-2xl shadow-sm p-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-8">Quick Actions</h2>
+              
+              <div className="flex flex-col space-y-4">
+                <Button
+                  variant="ghost"
+                  className="w-full flex items-center px-6 py-3 hover:bg-orange-50/60 rounded-xl group"
+                  onClick={() => navigate('/profile/preferred-diet')}
                 >
-                  <div className="flex items-center">
-                    <div className="p-2 bg-orange-500 rounded-lg text-white">
-                      <MapPin size={20} />
+                  <div className="flex items-center w-full">
+                    <div className="shrink-0 w-12 h-12 bg-orange-50 rounded-xl p-2.5 flex items-center justify-center">
+                      <Salad className="h-6 w-6 text-orange-500" />
                     </div>
-                    <span className="ml-3 font-medium">Manage Addresses</span>
+                    <span className="ml-4 text-lg font-medium text-gray-900">Preferred Diet</span>
+                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transition-colors ml-auto" />
                   </div>
-                  <ChevronRight className="text-orange-500 transform group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  to="/payment-methods"
-                  className="flex items-center justify-between p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors group"
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  className="w-full flex items-center px-6 py-3 hover:bg-orange-50/60 rounded-xl group"
+                  onClick={() => navigate('/profile/special-occasions')}
                 >
-                  <div className="flex items-center">
-                    <div className="p-2 bg-orange-500 rounded-lg text-white">
-                      <CreditCard size={20} />
+                  <div className="flex items-center w-full">
+                    <div className="shrink-0 w-12 h-12 bg-orange-50 rounded-xl p-2.5 flex items-center justify-center">
+                      <Calendar className="h-6 w-6 text-orange-500" />
                     </div>
-                    <span className="ml-3 font-medium">Payment Methods</span>
+                    <span className="ml-4 text-lg font-medium text-gray-900">Special Occasions</span>
+                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transition-colors ml-auto" />
                   </div>
-                  <ChevronRight className="text-orange-500 transform group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  to="/change-password"
-                  className="flex items-center justify-between p-4 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors group"
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  className="w-full flex items-center px-6 py-3 hover:bg-orange-50/60 rounded-xl group"
+                  onClick={() => navigate('/profile/catering')}
                 >
-                  <div className="flex items-center">
-                    <div className="p-2 bg-orange-500 rounded-lg text-white">
-                      <Lock size={20} />
+                  <div className="flex items-center w-full">
+                    <div className="shrink-0 w-12 h-12 bg-orange-50 rounded-xl p-2.5 flex items-center justify-center">
+                      <UtensilsCrossed className="h-6 w-6 text-orange-500" />
                     </div>
-                    <span className="ml-3 font-medium">Change Password</span>
+                    <span className="ml-4 text-lg font-medium text-gray-900">Catering</span>
+                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-500 transition-colors ml-auto" />
                   </div>
-                  <ChevronRight className="text-orange-500 transform group-hover:translate-x-1 transition-transform" />
-                </Link>
+                </Button>
               </div>
-            </motion.div>
+            </div>
 
             {/* Account Actions */}
             <motion.div 
