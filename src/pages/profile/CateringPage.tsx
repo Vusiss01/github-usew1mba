@@ -1,159 +1,179 @@
 import React, { useState } from 'react';
-import { ChevronLeft } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { CateringCompanies } from '@/components/catering/CateringCompanies';
+import { CateringMenu } from '@/components/catering/CateringMenu';
+import { Card } from '@/components/ui/card';
 
 interface CateringRequest {
   eventType: string;
-  guestCount: string;
+  guestCount: number;
   date: string;
   time: string;
   location: string;
   additionalNotes: string;
+  selectedCompany: string;
+  selectedItems: { [key: string]: number };
 }
 
 export default function CateringPage() {
   const navigate = useNavigate();
   const [request, setRequest] = useState<CateringRequest>({
     eventType: '',
-    guestCount: '',
+    guestCount: 0,
     date: '',
     time: '',
     location: '',
-    additionalNotes: ''
+    additionalNotes: '',
+    selectedCompany: '',
+    selectedItems: {}
   });
 
   const eventTypes = [
-    'Corporate Event',
     'Wedding',
+    'Corporate Event',
     'Birthday Party',
-    'Conference',
-    'Social Gathering',
+    'Anniversary',
+    'Graduation',
     'Other'
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Submit catering request to backend
+    // Here you would typically send the request to your backend
+    console.log('Submitting request:', request);
     navigate('/profile');
   };
 
-  const handleInputChange = (field: keyof CateringRequest, value: string) => {
+  const handleCompanySelect = (companyId: string) => {
     setRequest(prev => ({
       ...prev,
-      [field]: value
+      selectedCompany: companyId,
+      selectedItems: {} // Reset selected items when company changes
+    }));
+  };
+
+  const handleUpdateItem = (itemId: string, quantity: number) => {
+    if (quantity < 0) return;
+    setRequest(prev => ({
+      ...prev,
+      selectedItems: {
+        ...prev.selectedItems,
+        [itemId]: quantity
+      }
     }));
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
-      <div className="mx-auto max-w-2xl">
-        <div className="mb-6 flex items-center">
-          <button
-            onClick={() => navigate('/profile')}
-            className="flex items-center text-gray-600 hover:text-gray-900"
-          >
-            <ChevronLeft className="h-5 w-5" />
-            <span className="ml-1">Back to Profile</span>
-          </button>
-        </div>
-
-        <div className="rounded-lg bg-white p-6 shadow-sm">
-          <h1 className="mb-6 text-2xl font-semibold text-gray-900">Catering Request</h1>
-          <p className="mb-6 text-gray-600">
-            Fill out the form below to request catering services for your event.
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="container mx-auto py-8 space-y-8">
+      <h1 className="text-3xl font-bold mb-8">Catering Request</h1>
+      
+      <form onSubmit={handleSubmit} className="space-y-8">
+        <Card className="p-6">
+          <h2 className="text-xl font-semibold mb-4">Event Details</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Event Type</label>
+              <label className="text-sm font-medium">Event Type</label>
               <select
-                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                className="w-full p-2 border rounded-md"
                 value={request.eventType}
-                onChange={(e) => handleInputChange('eventType', e.target.value)}
+                onChange={(e) => setRequest({ ...request, eventType: e.target.value })}
                 required
               >
                 <option value="">Select Event Type</option>
                 {eventTypes.map((type) => (
-                  <option key={type} value={type}>{type}</option>
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Number of Guests</label>
+              <label className="text-sm font-medium">Number of Guests</label>
               <Input
                 type="number"
-                placeholder="Enter number of guests"
-                value={request.guestCount}
-                onChange={(e) => handleInputChange('guestCount', e.target.value)}
+                value={request.guestCount || ''}
+                onChange={(e) => setRequest({ ...request, guestCount: parseInt(e.target.value) || 0 })}
                 required
                 min="1"
               />
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Event Date</label>
-                <Input
-                  type="date"
-                  value={request.date}
-                  onChange={(e) => handleInputChange('date', e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Event Time</label>
-                <Input
-                  type="time"
-                  value={request.time}
-                  onChange={(e) => handleInputChange('time', e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Event Location</label>
+              <label className="text-sm font-medium">Event Date</label>
               <Input
-                placeholder="Enter event location"
-                value={request.location}
-                onChange={(e) => handleInputChange('location', e.target.value)}
+                type="date"
+                value={request.date}
+                onChange={(e) => setRequest({ ...request, date: e.target.value })}
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Additional Notes</label>
-              <textarea
-                className="w-full rounded-md border border-gray-300 px-3 py-2"
-                rows={4}
-                placeholder="Any dietary restrictions, special requirements, or preferences"
-                value={request.additionalNotes}
-                onChange={(e) => handleInputChange('additionalNotes', e.target.value)}
+              <label className="text-sm font-medium">Event Time</label>
+              <Input
+                type="time"
+                value={request.time}
+                onChange={(e) => setRequest({ ...request, time: e.target.value })}
+                required
               />
             </div>
 
-            <div className="flex justify-end space-x-4">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => navigate('/profile')}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="bg-orange-500 text-white hover:bg-orange-600"
-              >
-                Submit Request
-              </Button>
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-sm font-medium">Event Location</label>
+              <Input
+                value={request.location}
+                onChange={(e) => setRequest({ ...request, location: e.target.value })}
+                placeholder="Enter event location"
+                required
+              />
             </div>
-          </form>
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <CateringCompanies
+            selectedCompanyId={request.selectedCompany}
+            onSelectCompany={handleCompanySelect}
+          />
+        </Card>
+
+        {request.selectedCompany && (
+          <Card className="p-6">
+            <CateringMenu
+              companyId={request.selectedCompany}
+              selectedItems={request.selectedItems}
+              onUpdateItem={handleUpdateItem}
+            />
+          </Card>
+        )}
+
+        <Card className="p-6">
+          <h2 className="text-xl font-semibold mb-4">Additional Notes</h2>
+          <Textarea
+            value={request.additionalNotes}
+            onChange={(e) => setRequest({ ...request, additionalNotes: e.target.value })}
+            placeholder="Any special requests or dietary requirements?"
+            className="min-h-[100px]"
+          />
+        </Card>
+
+        <div className="flex justify-end space-x-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate('/profile')}
+          >
+            Cancel
+          </Button>
+          <Button type="submit">
+            Submit Request
+          </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 } 
