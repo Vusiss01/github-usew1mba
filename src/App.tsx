@@ -36,7 +36,7 @@ function App() {
               <MessagesPage />
             </Layout>
           } />
-          <Route path="/profile" element={
+          <Route path="/profile/*" element={
             <Layout>
               <ProfilePage />
             </Layout>
