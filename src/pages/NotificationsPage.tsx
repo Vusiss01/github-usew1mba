@@ -72,6 +72,8 @@ export default function NotificationsPage() {
       navigate('/messages');
     } else if (notification.type === 'order' && notification.orderId) {
       navigate(`/orders/${notification.orderId}`);
+    } else if (notification.type === 'system') {
+      navigate('/special-offers');
     }
   };
 
