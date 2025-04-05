@@ -4,6 +4,17 @@ import { ChevronLeft, Clock, MapPin, CreditCard, Plus } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
+import AddressSelector from '../components/checkout/AddressSelector';
+import PaymentMethodForm from '../components/checkout/PaymentMethodForm';
+
+interface Address {
+  id: string;
+  street: string;
+  city: string;
+  unit?: string;
+  isDefault?: boolean;
+  instructions?: string;
+}
 
 interface DeliveryAddress {
   street: string;
@@ -24,9 +35,12 @@ interface PaymentMethod {
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState<'delivery' | 'payment' | 'review'>('delivery');
-  const [deliveryAddress, setDeliveryAddress] = useState<DeliveryAddress>({
+  const [showAddressSelector, setShowAddressSelector] = useState(false);
+  const [deliveryAddress, setDeliveryAddress] = useState<Address>({
+    id: '1',
     street: '12 Roncroft Dr',
     city: 'Toronto',
+    isDefault: true,
   });
   
   // Sample payment methods
@@ -59,6 +73,8 @@ export default function CheckoutPage() {
     estimatedDeliveryTime: '30-45'
   };
 
+  const [showPaymentMethodForm, setShowPaymentMethodForm] = useState(false);
+
   const handleBack = () => {
     if (step === 'delivery') {
       navigate('/cart');
@@ -79,6 +95,16 @@ export default function CheckoutPage() {
       console.log('Order submitted');
       navigate('/order-confirmation');
     }
+  };
+
+  const handleAddressChange = (address: Address) => {
+    setDeliveryAddress(address);
+  };
+
+  const handleAddPaymentMethod = (newPaymentMethod: PaymentMethod) => {
+    // In a real app, this would update the payment methods from an API
+    paymentMethods.push(newPaymentMethod);
+    setSelectedPaymentMethod(newPaymentMethod.id);
   };
 
   return (
@@ -123,29 +149,20 @@ export default function CheckoutPage() {
                   <MapPin className="h-5 w-5 text-gray-400 mr-3" />
                   <div>
                     <p className="font-medium">{deliveryAddress.street}</p>
+                    {deliveryAddress.unit && (
+                      <p className="text-sm text-gray-500">Unit {deliveryAddress.unit}</p>
+                    )}
                     <p className="text-sm text-gray-500">{deliveryAddress.city}</p>
                   </div>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     className="ml-auto"
-                    onClick={() => {/* Handle address change */}}
+                    onClick={() => setShowAddressSelector(true)}
                   >
                     Change
                   </Button>
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Apartment/Suite/Unit
-                </label>
-                <Input
-                  type="text"
-                  placeholder="Optional"
-                  value={deliveryAddress.unit || ''}
-                  onChange={(e) => setDeliveryAddress(prev => ({ ...prev, unit: e.target.value }))}
-                />
               </div>
 
               <div>
@@ -202,7 +219,7 @@ export default function CheckoutPage() {
               <Button
                 variant="outline"
                 className="w-full mt-4"
-                onClick={() => {/* Handle add payment method */}}
+                onClick={() => setShowPaymentMethodForm(true)}
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Payment Method
@@ -302,6 +319,21 @@ export default function CheckoutPage() {
           </Button>
         </div>
       </div>
+
+      {/* Payment Method Form Dialog */}
+      <PaymentMethodForm
+        open={showPaymentMethodForm}
+        onClose={() => setShowPaymentMethodForm(false)}
+        onSave={handleAddPaymentMethod}
+      />
+
+      {/* Address Selector Dialog */}
+      <AddressSelector
+        open={showAddressSelector}
+        onClose={() => setShowAddressSelector(false)}
+        onSelect={handleAddressChange}
+        currentAddress={deliveryAddress}
+      />
     </div>
   );
 } 
