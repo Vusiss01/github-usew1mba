@@ -1,6 +1,7 @@
 import React from 'react';
 import { Bell, ShoppingBag, MessageSquare, Info } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 interface Notification {
   id: string;
@@ -53,6 +54,8 @@ const sampleNotifications: Notification[] = [
 ];
 
 export default function NotificationsPage() {
+  const navigate = useNavigate();
+
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'order':
@@ -66,11 +69,9 @@ export default function NotificationsPage() {
 
   const handleNotificationClick = (notification: Notification) => {
     if (notification.type === 'message') {
-      // Navigate to messages page
-      window.location.href = '/messages';
-    } else if (notification.type === 'order') {
-      // Navigate to order details
-      window.location.href = `/orders/${notification.orderId}`;
+      navigate('/messages');
+    } else if (notification.type === 'order' && notification.orderId) {
+      navigate(`/orders/${notification.orderId}`);
     }
   };
 

@@ -22,6 +22,7 @@ import CateringPage from './pages/profile/CateringPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import NotificationsPage from './pages/NotificationsPage';
+import OrderTrackingPage from './pages/OrderTrackingPage';
 
 function App() {
   return (
@@ -79,6 +80,11 @@ function App() {
           <Route path="/notifications" element={
             <Layout>
               <NotificationsPage />
+            </Layout>
+          } />
+          <Route path="/orders/:orderId" element={
+            <Layout>
+              <OrderTrackingPage />
             </Layout>
           } />
           <Route path="/" element={
