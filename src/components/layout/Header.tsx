@@ -19,9 +19,9 @@ interface HeaderProps {
   showLocation?: boolean;
   showCart?: boolean;
   showFilters?: boolean;
-  cartCount?: number;
-  onFilterClick?: () => void;
   onCartClick?: () => void;
+  onSearch?: (query: string) => void;
+  onFilterChange?: (filter: string) => void;
 }
 
 export default function Header({
@@ -29,9 +29,9 @@ export default function Header({
   showLocation = true,
   showCart = true,
   showFilters = true,
-  cartCount = 0,
-  onFilterClick,
   onCartClick,
+  onSearch,
+  onFilterChange,
 }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [location, setLocation] = useState('12 Roncroft Dr');
@@ -39,9 +39,22 @@ export default function Header({
   const { toggleSidebar } = useSidebar();
   const navigate = useNavigate();
 
+  // Temporary cart count for demonstration
+  const cartCount = 6; // Total quantity of items in the cart
+
   const handleVoiceOrder = () => {
     setIsRecording(!isRecording);
     // Voice recognition logic would go here
+  };
+
+  const handleCartClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/cart');
+  };
+
+  const handleFilterClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onFilterChange?.([]);
   };
 
   return (
@@ -80,10 +93,7 @@ export default function Header({
             {showCart && (
               <button
                 className="relative"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onCartClick?.();
-                }}
+                onClick={handleCartClick}
                 aria-label="Shopping cart"
               >
                 <ShoppingBag className="w-6 h-6" />
@@ -155,10 +165,7 @@ export default function Header({
             {showCart && (
               <button
                 className="relative hidden md:block"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onCartClick?.();
-                }}
+                onClick={handleCartClick}
                 aria-label="Shopping cart"
               >
                 <ShoppingBag className="w-6 h-6" />
@@ -173,11 +180,11 @@ export default function Header({
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={onFilterClick}
+                onClick={handleFilterClick}
                 aria-label="Toggle filters"
                 className="hidden md:flex"
               >
-                <SlidersHorizontal className="h-6 w-6" />
+                <Menu className="h-4 w-4" />
               </Button>
             )}
           </div>

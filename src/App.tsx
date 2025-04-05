@@ -19,6 +19,8 @@ import ChangePasswordPage from './pages/profile/ChangePasswordPage';
 import PreferredDietPage from './pages/profile/PreferredDietPage';
 import SpecialOccasionsPage from './pages/profile/SpecialOccasionsPage';
 import CateringPage from './pages/profile/CateringPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
   return (
@@ -71,6 +73,8 @@ function App() {
               <CateringPage />
             </Layout>
           } />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/" element={
             <Layout>
               <div className="flex flex-col space-y-8">
