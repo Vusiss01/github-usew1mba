@@ -21,6 +21,7 @@ import SpecialOccasionsPage from './pages/profile/SpecialOccasionsPage';
 import CateringPage from './pages/profile/CateringPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
+import NotificationsPage from './pages/NotificationsPage';
 
 function App() {
   return (
@@ -75,6 +76,11 @@ function App() {
           } />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/notifications" element={
+            <Layout>
+              <NotificationsPage />
+            </Layout>
+          } />
           <Route path="/" element={
             <Layout>
               <div className="flex flex-col space-y-8">

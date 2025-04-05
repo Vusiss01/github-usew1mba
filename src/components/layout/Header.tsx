@@ -7,6 +7,7 @@ import {
   SlidersHorizontal,
   Menu,
   Mic,
+  Bell,
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../ui/input';
@@ -42,6 +43,9 @@ export default function Header({
   // Temporary cart count for demonstration
   const cartCount = 6; // Total quantity of items in the cart
 
+  // Temporary notification count for demonstration
+  const unreadNotifications = 3;
+
   const handleVoiceOrder = () => {
     setIsRecording(!isRecording);
     // Voice recognition logic would go here
@@ -54,7 +58,12 @@ export default function Header({
 
   const handleFilterClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    onFilterChange?.([]);
+    onFilterChange?.('');
+  };
+
+  const handleNotificationsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/notifications');
   };
 
   return (
@@ -176,6 +185,18 @@ export default function Header({
                 )}
               </button>
             )}
+            <button
+              className="relative hidden md:block"
+              onClick={handleNotificationsClick}
+              aria-label="Notifications"
+            >
+              <Bell className="w-6 h-6" />
+              {unreadNotifications > 0 && (
+                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {unreadNotifications}
+                </span>
+              )}
+            </button>
             {showFilters && (
               <Button
                 variant="ghost"
