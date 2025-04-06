@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CheckCircle2, Clock, ChefHat, Bike, Package, MapPin } from 'lucide-react';
+import DeliveryRatingPrompt from '../components/orders/DeliveryRatingPrompt';
 
 interface OrderStatus {
   step: number;
@@ -12,6 +13,42 @@ interface OrderStatus {
 
 export default function OrderTrackingPage() {
   const { orderId } = useParams();
+  const [showRatingPrompt, setShowRatingPrompt] = useState(false);
+  const [currentStep, setCurrentStep] = useState(2);
+
+  // Simulate order status updates
+  useEffect(() => {
+    if (currentStep < 5) {
+      const timer = setTimeout(() => {
+        setCurrentStep(prev => {
+          const newStep = prev + 1;
+          // Show rating prompt when order is delivered (step 5)
+          if (newStep === 5) {
+            setShowRatingPrompt(true);
+          }
+          return newStep;
+        });
+      }, 5000); // Update every 5 seconds for demo
+      return () => clearTimeout(timer);
+    }
+  }, [currentStep]);
+
+  const handleRatingSubmit = (orderId: string, rating: number, review: string) => {
+    // In a real app, this would send the rating to an API
+    console.log('Rating submitted:', { orderId, rating, review });
+    setShowRatingPrompt(false);
+  };
+
+  // Sample order data (in a real app, this would come from an API)
+  const order = {
+    id: orderId || '',
+    restaurantName: 'Restaurant ABC',
+    items: [
+      { name: 'Burger Deluxe', quantity: 2 },
+      { name: 'French Fries', quantity: 1 },
+      { name: 'Soft Drink', quantity: 2 }
+    ]
+  };
 
   // This would come from an API in a real application
   const orderStatuses: OrderStatus[] = [
@@ -51,9 +88,6 @@ export default function OrderTrackingPage() {
       icon: <MapPin className="w-6 h-6" />
     }
   ];
-
-  // In a real app, this would be determined by the actual order status
-  const currentStep = 2; // Order is being prepared
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -130,6 +164,15 @@ export default function OrderTrackingPage() {
           </div>
         </div>
       </div>
+
+      {/* Rating Prompt */}
+      {showRatingPrompt && (
+        <DeliveryRatingPrompt
+          order={order}
+          onSubmit={handleRatingSubmit}
+          onClose={() => setShowRatingPrompt(false)}
+        />
+      )}
     </div>
   );
 } 
