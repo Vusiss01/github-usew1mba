@@ -24,6 +24,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import NotificationsPage from './pages/NotificationsPage';
 import OrderTrackingPage from './pages/OrderTrackingPage';
 import SpecialOffersPage from './pages/SpecialOffersPage';
+import OrderHistoryPage from './pages/OrderHistoryPage';
 
 function App() {
   return (
@@ -91,6 +92,11 @@ function App() {
           <Route path="/special-offers" element={
             <Layout>
               <SpecialOffersPage />
+            </Layout>
+          } />
+          <Route path="/orders" element={
+            <Layout>
+              <OrderHistoryPage />
             </Layout>
           } />
           <Route path="/" element={
