@@ -23,8 +23,9 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import NotificationsPage from './pages/NotificationsPage';
 import OrderTrackingPage from './pages/OrderTrackingPage';
-import SpecialOffersPage from './pages/SpecialOffersPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
+import SpecialOffers from './components/special-offers/SpecialOffers';
+import SpecialOfferDetail from './components/special-offers/SpecialOfferDetail';
 
 function App() {
   return (
@@ -91,7 +92,12 @@ function App() {
           } />
           <Route path="/special-offers" element={
             <Layout>
-              <SpecialOffersPage />
+              <SpecialOffers />
+            </Layout>
+          } />
+          <Route path="/special-offer/:offerId" element={
+            <Layout>
+              <SpecialOfferDetail />
             </Layout>
           } />
           <Route path="/orders" element={
@@ -227,6 +233,11 @@ function App() {
                       <p className="font-medium">Steak</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Special Offers Section */}
+                <div className="w-full max-w-6xl mx-auto px-4">
+                  <SpecialOffers />
                 </div>
 
                 {/* Promotional Banner */}
