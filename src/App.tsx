@@ -10,7 +10,6 @@ import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage"
 import ProfilePage from "./pages/profile/ProfilePage"
 import MessagesPage from "./pages/messages/MessagesPage"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import PromotionalBanner from "./components/promotions/PromotionalBanner"
 import PopularItems from "./components/popular/PopularItems"
 import FeaturedRestaurants from "./components/restaurants/FeaturedRestaurants"
 import ManageAddressesPage from './pages/profile/ManageAddressesPage';
@@ -238,11 +237,6 @@ function App() {
                 {/* Special Offers Section */}
                 <div className="w-full max-w-6xl mx-auto px-4">
                   <SpecialOffers />
-                </div>
-
-                {/* Promotional Banner */}
-                <div className="w-full max-w-6xl mx-auto px-4">
-                  <PromotionalBanner />
                 </div>
 
                 {/* Popular Items */}
