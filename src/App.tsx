@@ -1,6 +1,6 @@
 import { Layout } from "./components/layout/Layout"
 import { SidebarProvider } from "./components/layout/SidebarContext"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import SplashScreen from "./components/auth/SplashScreen"
 import LoginPage from "./pages/auth/LoginPage"
 import SignUpPage from "./pages/auth/SignUpPage"
@@ -25,85 +25,13 @@ import OrderTrackingPage from './pages/OrderTrackingPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import SpecialOffers from './components/special-offers/SpecialOffers';
 import SpecialOfferDetail from './components/special-offers/SpecialOfferDetail';
+import CategoryPage from './pages/CategoryPage';
 
 function App() {
   return (
     <Router>
       <SidebarProvider>
         <Routes>
-          <Route path="/splash" element={<SplashScreen />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/terms" element={<TermsOfServicePage />} />
-          <Route path="/privacy" element={<PrivacyPolicyPage />} />
-          <Route path="/messages" element={
-            <Layout>
-              <MessagesPage />
-            </Layout>
-          } />
-          <Route path="/profile/*" element={
-            <Layout>
-              <ProfilePage />
-            </Layout>
-          } />
-          <Route path="/profile/addresses" element={
-            <Layout>
-              <ManageAddressesPage />
-            </Layout>
-          } />
-          <Route path="/profile/payment-methods" element={
-            <Layout>
-              <PaymentMethodsPage />
-            </Layout>
-          } />
-          <Route path="/profile/change-password" element={
-            <Layout>
-              <ChangePasswordPage />
-            </Layout>
-          } />
-          <Route path="/profile/preferred-diet" element={
-            <Layout>
-              <PreferredDietPage />
-            </Layout>
-          } />
-          <Route path="/profile/special-occasions" element={
-            <Layout>
-              <SpecialOccasionsPage />
-            </Layout>
-          } />
-          <Route path="/profile/catering" element={
-            <Layout>
-              <CateringPage />
-            </Layout>
-          } />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/notifications" element={
-            <Layout>
-              <NotificationsPage />
-            </Layout>
-          } />
-          <Route path="/orders/:orderId" element={
-            <Layout>
-              <OrderTrackingPage />
-            </Layout>
-          } />
-          <Route path="/special-offers" element={
-            <Layout>
-              <SpecialOffers />
-            </Layout>
-          } />
-          <Route path="/special-offer/:offerId" element={
-            <Layout>
-              <SpecialOfferDetail />
-            </Layout>
-          } />
-          <Route path="/orders" element={
-            <Layout>
-              <OrderHistoryPage />
-            </Layout>
-          } />
           <Route path="/" element={
             <Layout>
               <div className="flex flex-col space-y-8">
@@ -142,95 +70,95 @@ function App() {
                   {/* Mobile View - Instagram Stories Style */}
                   <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4">
                     <div className="flex gap-4">
-                      <div className="w-20 flex flex-col items-start">
+                      <Link to="/category/pizza" className="w-20 flex flex-col items-start">
                         <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-orange-500 p-0.5">
                           <div className="rounded-full overflow-hidden w-full h-full relative">
                             <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591" alt="Pizza" className="w-full h-full object-cover" />
                           </div>
                         </div>
                         <p className="text-sm mt-1 font-medium">Pizza</p>
-                      </div>
-                      <div className="w-20 flex flex-col items-start">
+                      </Link>
+                      <Link to="/category/burger" className="w-20 flex flex-col items-start">
                         <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-orange-500 p-0.5">
                           <div className="rounded-full overflow-hidden w-full h-full relative">
                             <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="Burger" className="w-full h-full object-cover" />
                           </div>
                         </div>
                         <p className="text-sm mt-1 font-medium">Burger</p>
-                      </div>
-                      <div className="w-20 flex flex-col items-start">
+                      </Link>
+                      <Link to="/category/noodles" className="w-20 flex flex-col items-start">
                         <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-orange-500 p-0.5">
                           <div className="rounded-full overflow-hidden w-full h-full relative">
                             <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624" alt="Noodles" className="w-full h-full object-cover" />
                           </div>
                         </div>
                         <p className="text-sm mt-1 font-medium">Noodles</p>
-                      </div>
-                      <div className="w-20 flex flex-col items-start">
+                      </Link>
+                      <Link to="/category/sub-sandwich" className="w-20 flex flex-col items-start">
                         <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-orange-500 p-0.5">
                           <div className="rounded-full overflow-hidden w-full h-full relative">
                             <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569" alt="Sub-sandwich" className="w-full h-full object-cover" />
                           </div>
                         </div>
                         <p className="text-sm mt-1 font-medium">Sub-sandwich</p>
-                      </div>
-                      <div className="w-20 flex flex-col items-start">
+                      </Link>
+                      <Link to="/category/chowmein" className="w-20 flex flex-col items-start">
                         <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-orange-500 p-0.5">
                           <div className="rounded-full overflow-hidden w-full h-full relative">
                             <img src="https://images.unsplash.com/photo-1607330289024-1535c6b4e1c1" alt="Chowmein" className="w-full h-full object-cover" />
                           </div>
                         </div>
                         <p className="text-sm mt-1 font-medium">Chowmein</p>
-                      </div>
-                      <div className="w-20 flex flex-col items-start">
+                      </Link>
+                      <Link to="/category/sushi" className="w-20 flex flex-col items-start">
                         <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-orange-500 p-0.5">
                           <div className="rounded-full overflow-hidden w-full h-full relative">
-                            <img src="https://images.unsplash.com/photo-1546964124-0cce460f38ef" alt="Steak" className="w-full h-full object-cover" />
+                            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c" alt="Sushi" className="w-full h-full object-cover" />
                           </div>
                         </div>
-                        <p className="text-sm mt-1 font-medium">Steak</p>
-                      </div>
+                        <p className="text-sm mt-1 font-medium">Sushi</p>
+                      </Link>
                     </div>
                   </div>
 
                   {/* Desktop Grid View */}
                   <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-6">
-                    <div className="text-left">
+                    <Link to="/category/pizza" className="text-left">
                       <div className="rounded-full overflow-hidden mb-2 aspect-square">
                         <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591" alt="Pizza" className="w-full h-full object-cover" />
                       </div>
                       <p className="font-medium">Pizza</p>
-                    </div>
-                    <div className="text-left">
+                    </Link>
+                    <Link to="/category/burger" className="text-left">
                       <div className="rounded-full overflow-hidden mb-2 aspect-square">
                         <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="Burger" className="w-full h-full object-cover" />
                       </div>
                       <p className="font-medium">Burger</p>
-                    </div>
-                    <div className="text-left">
+                    </Link>
+                    <Link to="/category/noodles" className="text-left">
                       <div className="rounded-full overflow-hidden mb-2 aspect-square">
                         <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624" alt="Noodles" className="w-full h-full object-cover" />
                       </div>
                       <p className="font-medium">Noodles</p>
-                    </div>
-                    <div className="text-left">
+                    </Link>
+                    <Link to="/category/sub-sandwich" className="text-left">
                       <div className="rounded-full overflow-hidden mb-2 aspect-square">
                         <img src="https://images.unsplash.com/photo-1509722747041-616f39b57569" alt="Sub-sandwich" className="w-full h-full object-cover" />
                       </div>
                       <p className="font-medium">Sub-sandwich</p>
-                    </div>
-                    <div className="text-left">
+                    </Link>
+                    <Link to="/category/chowmein" className="text-left">
                       <div className="rounded-full overflow-hidden mb-2 aspect-square">
                         <img src="https://images.unsplash.com/photo-1607330289024-1535c6b4e1c1" alt="Chowmein" className="w-full h-full object-cover" />
                       </div>
                       <p className="font-medium">Chowmein</p>
-                    </div>
-                    <div className="text-left">
+                    </Link>
+                    <Link to="/category/sushi" className="text-left">
                       <div className="rounded-full overflow-hidden mb-2 aspect-square">
-                        <img src="https://images.unsplash.com/photo-1546964124-0cce460f38ef" alt="Steak" className="w-full h-full object-cover" />
+                        <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c" alt="Sushi" className="w-full h-full object-cover" />
                       </div>
-                      <p className="font-medium">Steak</p>
-                    </div>
+                      <p className="font-medium">Sushi</p>
+                    </Link>
                   </div>
                 </div>
 
@@ -251,10 +179,35 @@ function App() {
               </div>
             </Layout>
           } />
+          
+          {/* Add the category route */}
+          <Route path="/category/:category" element={<Layout><CategoryPage /></Layout>} />
+          
+          {/* Other existing routes */}
+          <Route path="/splash" element={<SplashScreen />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/profile" element={<Layout><ProfilePage /></Layout>} />
+          <Route path="/messages" element={<Layout><MessagesPage /></Layout>} />
+          <Route path="/profile/addresses" element={<Layout><ManageAddressesPage /></Layout>} />
+          <Route path="/profile/payment-methods" element={<Layout><PaymentMethodsPage /></Layout>} />
+          <Route path="/profile/change-password" element={<Layout><ChangePasswordPage /></Layout>} />
+          <Route path="/profile/preferred-diet" element={<Layout><PreferredDietPage /></Layout>} />
+          <Route path="/profile/special-occasions" element={<Layout><SpecialOccasionsPage /></Layout>} />
+          <Route path="/profile/catering" element={<Layout><CateringPage /></Layout>} />
+          <Route path="/cart" element={<Layout><CartPage /></Layout>} />
+          <Route path="/checkout" element={<Layout><CheckoutPage /></Layout>} />
+          <Route path="/notifications" element={<Layout><NotificationsPage /></Layout>} />
+          <Route path="/order-tracking" element={<Layout><OrderTrackingPage /></Layout>} />
+          <Route path="/order-history" element={<Layout><OrderHistoryPage /></Layout>} />
+          <Route path="/special-offer/:id" element={<Layout><SpecialOfferDetail /></Layout>} />
         </Routes>
       </SidebarProvider>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
