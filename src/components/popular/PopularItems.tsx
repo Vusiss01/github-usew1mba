@@ -59,6 +59,13 @@ const PopularItems: React.FC<PopularItemsProps> = ({ className = '' }) => {
     }
   ];
 
+  const handleAddToCart = (e: React.MouseEvent, item: PopularItem) => {
+    e.stopPropagation(); // Prevent card click when clicking the button
+    // In a real app, this would dispatch to a cart context/store
+    console.log('Added to cart:', item);
+    // You can add a toast notification here
+  };
+
   return (
     <section className={`mb-8 ${className}`}>
       <div className="flex justify-between items-center mb-6">
@@ -107,6 +114,7 @@ const PopularItems: React.FC<PopularItemsProps> = ({ className = '' }) => {
                 <div className="mt-2 text-lg font-bold">${item.price.toFixed(2)}</div>
                 <button 
                   className="mt-3 w-full bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-orange-600 transition-colors"
+                  onClick={(e) => handleAddToCart(e, item)}
                 >
                   Order Now
                 </button>

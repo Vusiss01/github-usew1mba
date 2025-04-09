@@ -26,6 +26,7 @@ import OrderHistoryPage from './pages/OrderHistoryPage';
 import SpecialOffers from './components/special-offers/SpecialOffers';
 import SpecialOfferDetail from './components/special-offers/SpecialOfferDetail';
 import CategoryPage from './pages/CategoryPage';
+import ItemDetailPage from './pages/ItemDetailPage';
 
 function App() {
   return (
@@ -182,6 +183,9 @@ function App() {
           
           {/* Add the category route */}
           <Route path="/category/:category" element={<Layout><CategoryPage /></Layout>} />
+          
+          {/* Add the item detail route */}
+          <Route path="/item/:id" element={<ItemDetailPage />} />
           
           {/* Other existing routes */}
           <Route path="/splash" element={<SplashScreen />} />
