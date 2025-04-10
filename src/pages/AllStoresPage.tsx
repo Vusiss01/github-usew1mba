@@ -125,11 +125,12 @@ const AllStoresPage = () => {
           {allStores.map((store) => (
             <motion.div
               key={store.id}
-              className="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-300"
+              className="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-300 will-change-transform"
               onClick={() => handleStoreClick(store.id)}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
+              style={{ transform: 'translateZ(0)' }}
             >
               <div className="relative h-48">
                 <img

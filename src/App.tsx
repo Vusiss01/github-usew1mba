@@ -1,14 +1,7 @@
 import { Layout } from "./components/layout/Layout"
 import { SidebarProvider } from "./components/layout/SidebarContext"
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
-import SplashScreen from "./components/auth/SplashScreen"
-import LoginPage from "./pages/auth/LoginPage"
-import SignUpPage from "./pages/auth/SignUpPage"
-import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage"
-import TermsOfServicePage from "./pages/legal/TermsOfServicePage"
-import PrivacyPolicyPage from "./pages/legal/PrivacyPolicyPage"
-import ProfilePage from "./pages/profile/ProfilePage"
-import MessagesPage from "./pages/messages/MessagesPage"
+import { lazyLoad } from './utils/lazyLoad';
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import PopularItems from "./components/popular/PopularItems"
 import FeaturedRestaurants from "./components/restaurants/FeaturedRestaurants"
@@ -25,8 +18,23 @@ import OrderTrackingPage from './pages/OrderTrackingPage';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import SpecialOffers from './components/special-offers/SpecialOffers';
 import SpecialOfferDetail from './components/special-offers/SpecialOfferDetail';
-import CategoryPage from './pages/CategoryPage';
 import ItemDetailPage from './pages/ItemDetailPage';
+
+// Lazy load components
+const HomePage = lazyLoad(() => import('./components/HomePage'));
+const AllStoresPage = lazyLoad(() => import('./pages/AllStoresPage'));
+const AllRecommendationsPage = lazyLoad(() => import('./pages/AllRecommendationsPage'));
+const AllTrendingPage = lazyLoad(() => import('./pages/AllTrendingPage'));
+const ProfilePage = lazyLoad(() => import('./pages/profile/ProfilePage'));
+const CategoryPage = lazyLoad(() => import('./pages/category/[id]'));
+const FullMapPage = lazyLoad(() => import('./pages/FullMapPage'));
+const SplashScreen = lazyLoad(() => import('./components/auth/SplashScreen'));
+const LoginPage = lazyLoad(() => import('./pages/auth/LoginPage'));
+const SignUpPage = lazyLoad(() => import('./pages/auth/SignUpPage'));
+const ForgotPasswordPage = lazyLoad(() => import('./pages/auth/ForgotPasswordPage'));
+const TermsOfServicePage = lazyLoad(() => import('./pages/legal/TermsOfServicePage'));
+const PrivacyPolicyPage = lazyLoad(() => import('./pages/legal/PrivacyPolicyPage'));
+const MessagesPage = lazyLoad(() => import('./pages/messages/MessagesPage'));
 
 function App() {
   return (

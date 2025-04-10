@@ -101,10 +101,11 @@ export function Layout({ children }: LayoutProps) {
       <AnimatePresence>
         <motion.div 
           id="sidebar"
-          className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-[60] md:w-72"
+          className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-[60] md:w-72 will-change-transform"
           initial="closed"
           animate={isOpen ? "open" : "closed"}
           variants={sidebarVariants}
+          style={{ transform: 'translateZ(0)' }}
         >
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-center h-16 border-b bg-gradient-to-r from-orange-500 to-orange-600">

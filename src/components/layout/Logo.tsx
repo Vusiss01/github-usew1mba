@@ -26,45 +26,46 @@ const Logo: React.FC<LogoProps> = ({ className = "", variant = 'default' }) => {
 
   return (
     <motion.div 
-      className={`flex items-center ${className} relative cursor-pointer select-none`}
+      className={`flex items-center ${className} relative cursor-pointer select-none will-change-transform`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => navigate('/splash')}
+      style={{ transform: 'translateZ(0)' }}
     >
-      <div className="relative">
-        <h1 className="flex items-center space-x-1">
-          <span className={`text-2xl font-light tracking-tight ${textColor} relative`}>
-            <span className="relative">
-              b<span className={dotColor}>.</span>
-            </span>
-            <span className="relative">izi</span>
+      <h1 className="flex items-center space-x-1">
+        <span className={`text-2xl font-light tracking-tight ${textColor} relative`}>
+          <span className="relative">
+            b<span className={dotColor}>.</span>
           </span>
-          <span className={`text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${byteGradient}`}>
-            byte
-          </span>
-          <motion.div 
-            className={`absolute -top-1 -right-3 w-2 h-2 ${pulseColor} rounded-full`}
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [1, 0.8, 1]
-            }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        </h1>
-        <motion.div
-          className={`absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r ${underlineGradient}`}
-          initial={{ scaleX: 0, originX: 0 }}
-          animate={{ scaleX: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          <span className="relative">izi</span>
+        </span>
+        <span className={`text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${byteGradient}`}>
+          byte
+        </span>
+        <motion.div 
+          className={`absolute -top-1 -right-3 w-2 h-2 ${pulseColor} rounded-full will-change-transform`}
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [1, 0.8, 1]
+          }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ transform: 'translateZ(0)' }}
         />
-      </div>
+      </h1>
+      <motion.div
+        className={`absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r ${underlineGradient} will-change-transform`}
+        initial={{ scaleX: 0, originX: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        style={{ transform: 'translateZ(0)' }}
+      />
     </motion.div>
   );
 };
