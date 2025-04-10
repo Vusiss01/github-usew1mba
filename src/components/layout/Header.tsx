@@ -23,6 +23,7 @@ interface HeaderProps {
   onCartClick?: () => void;
   onSearch?: (query: string) => void;
   onFilterChange?: (filter: string) => void;
+  onFilterClick?: () => void;
 }
 
 export default function Header({
@@ -33,6 +34,7 @@ export default function Header({
   onCartClick,
   onSearch,
   onFilterChange,
+  onFilterClick,
 }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [location, setLocation] = useState('12 Roncroft Dr');
@@ -58,7 +60,7 @@ export default function Header({
 
   const handleFilterClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    onFilterChange?.('');
+    onFilterClick?.();
   };
 
   const handleNotificationsClick = (e: React.MouseEvent) => {
