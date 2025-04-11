@@ -19,6 +19,7 @@ import OrderHistoryPage from './pages/OrderHistoryPage';
 import SpecialOffers from './components/special-offers/SpecialOffers';
 import SpecialOfferDetail from './components/special-offers/SpecialOfferDetail';
 import ItemDetailPage from './pages/ItemDetailPage';
+import RestaurantDetailPage from './components/restaurants/RestaurantDetailPage';
 
 // Lazy load components
 const HomePage = lazyLoad(() => import('./components/HomePage'));
@@ -216,6 +217,7 @@ function App() {
           <Route path="/order-tracking" element={<Layout><OrderTrackingPage /></Layout>} />
           <Route path="/order-history" element={<Layout><OrderHistoryPage /></Layout>} />
           <Route path="/special-offer/:id" element={<Layout><SpecialOfferDetail /></Layout>} />
+          <Route path="/restaurant/:id" element={<Layout><RestaurantDetailPage /></Layout>} />
         </Routes>
       </SidebarProvider>
     </Router>
