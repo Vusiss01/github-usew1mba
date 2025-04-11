@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Phone, MessageSquare, Clock, Grid, List, Volume2, VolumeX, ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // Mock restaurant data matching the cards from the image
 const mockRestaurants = [
@@ -119,6 +125,7 @@ const RestaurantDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isAmbientPlaying, setIsAmbientPlaying] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -199,6 +206,24 @@ const RestaurantDetailPage = () => {
           "--translate-y": `${scrollY * 0.5}px`,
         } as React.CSSProperties}
       >
+        {/* Back Button */}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={() => navigate('/')}
+                className="absolute top-6 left-6 z-50 p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors backdrop-blur-sm text-white"
+                aria-label="Back to home"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Back to Home</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <img
           src={restaurant.coverImage}
           alt={restaurant.name}
