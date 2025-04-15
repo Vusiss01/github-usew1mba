@@ -6,6 +6,7 @@ import {
   Route,
   Link,
   useRoutes,
+  useNavigate,
 } from "react-router-dom";
 import routes from "tempo-routes";
 import { lazyLoad } from "./utils/lazyLoad";
@@ -27,6 +28,7 @@ import SpecialOffers from "./components/special-offers/SpecialOffers";
 import SpecialOfferDetail from "./components/special-offers/SpecialOfferDetail";
 import ItemDetailPage from "./pages/ItemDetailPage";
 import RestaurantDetailPage from "./components/restaurants/RestaurantDetailPage";
+import BrowseRestaurantsPage from "./pages/restaurants/BrowseRestaurantsPage";
 
 // Lazy load components
 const HomePage = lazyLoad(() => import("./components/HomePage"));
@@ -83,9 +85,12 @@ function App() {
                       <button className="px-6 py-3 text-sm font-semibold text-white bg-orange-500 rounded-full hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                         Order Now
                       </button>
-                      <button className="px-6 py-3 text-sm font-semibold text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                      <Link
+                        to="/restaurants/browse"
+                        className="px-6 py-3 text-sm font-semibold text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 inline-block"
+                      >
                         Browse Restaurants
-                      </button>
+                      </Link>
                     </div>
                   </div>
 
@@ -294,6 +299,16 @@ function App() {
             element={
               <Layout>
                 <CategoryPage />
+              </Layout>
+            }
+          />
+
+          {/* Add the browse restaurants route */}
+          <Route
+            path="/restaurants/browse"
+            element={
+              <Layout>
+                <BrowseRestaurantsPage />
               </Layout>
             }
           />
