@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   MapPin,
   ChevronDown,
@@ -8,12 +8,12 @@ import {
   Menu,
   Mic,
   Bell,
-} from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { Input } from '../ui/input';
-import { useSidebar } from './SidebarContext';
-import Logo from './Logo';
-import { useNavigate } from 'react-router-dom';
+} from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { Input } from "../ui/input";
+import { useSidebar } from "./SidebarContext";
+import Logo from "./Logo";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   showSearch?: boolean;
@@ -36,8 +36,8 @@ export default function Header({
   onFilterChange,
   onFilterClick,
 }: HeaderProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [location, setLocation] = useState('12 Roncroft Dr');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [location, setLocation] = useState("12 Roncroft Dr");
   const [isRecording, setIsRecording] = useState(false);
   const { toggleSidebar } = useSidebar();
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ export default function Header({
 
   const handleCartClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate('/cart');
+    navigate("/cart");
   };
 
   const handleFilterClick = (e: React.MouseEvent) => {
@@ -65,7 +65,7 @@ export default function Header({
 
   const handleNotificationsClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate('/notifications');
+    navigate("/notifications");
   };
 
   return (
@@ -122,14 +122,10 @@ export default function Header({
         <div className="flex items-center space-x-4 w-full md:w-auto mb-2 md:mb-0 md:ml-8">
           {/* Delivery/Pickup Toggle */}
           <div className="flex items-center bg-gray-100 rounded-full p-1 flex-1 md:flex-none">
-            <button
-              className="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm flex-1 md:flex-none"
-            >
+            <button className="px-4 py-1.5 rounded-full text-sm font-medium bg-white shadow-sm flex-1 md:flex-none">
               Delivery
             </button>
-            <button
-              className="px-4 py-1.5 rounded-full text-sm font-medium text-gray-700 flex-1 md:flex-none"
-            >
+            <button className="px-4 py-1.5 rounded-full text-sm font-medium text-gray-700 flex-1 md:flex-none">
               Pickup
             </button>
           </div>
@@ -161,10 +157,12 @@ export default function Header({
               <button
                 onClick={handleVoiceOrder}
                 className={`absolute right-3 top-1/2 transform -translate-y-1/2 p-1 rounded-full ${
-                  isRecording ? 'bg-red-500 animate-pulse' : 'hover:bg-gray-100'
+                  isRecording ? "bg-red-500 animate-pulse" : "hover:bg-gray-100"
                 }`}
               >
-                <Mic className={`h-4 w-4 ${isRecording ? 'text-white' : 'text-gray-400'}`} />
+                <Mic
+                  className={`h-4 w-4 ${isRecording ? "text-white" : "text-gray-400"}`}
+                />
               </button>
             </div>
           </div>
@@ -227,6 +225,7 @@ export default function Header({
           </div>
         </div>
       </div>
+      <div className="w-[122px] h-[13px]"></div>
     </header>
   );
 }
